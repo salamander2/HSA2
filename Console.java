@@ -21,8 +21,11 @@
  * @author Sam Scott
  * @author Josh Gray (mouse code)
  * @author Tom West (old hsa code)
+ * @author Michael Harwood (setStroke, antiAlias)
+ * @version 3.0
+ * 
  */
-package hsa_ufa;
+package hsa2;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -273,6 +276,7 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
   }
   /**
    * Draws a rectangle outline on the drawing area.
+   * Stroke width can be set using setStroke().
    * @param x Top left X coordinate
    * @param y Top left Y coordinate
    * @param width Width in pixels
@@ -283,6 +287,7 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
   }
   /**
    * Draws a filled in oval on the drawing area, inscribed within a rectangle.
+   * AntiAliasing can be set using setAntiAlias()
    * @param x Top left X coordinate of the rectangle
    * @param y Top left Y coordinate of the rectangle
    * @param width Width in pixels
@@ -293,6 +298,8 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
   }
   /**
    * Draws an oval outline on the drawing area, inscribed within a rectangle.
+   * Stroke width can be set using setStroke().
+   * AntiAliasing can be set using setAntiAlias()
    * @param x Top left X coordinate of the rectangle
    * @param y Top left Y coordinate of the rectangle
    * @param width Width in pixels
@@ -303,6 +310,8 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
   }
   /**
    * Draws a straight line on the drawing area.
+   * Stroke width can be set using setStroke().
+   * AntiAliasing can be set using setAntiAlias()
    * @param x1 Starting x coordinate
    * @param y1 Starting y coordinate
    * @param x2 Ending x coordinate
@@ -311,8 +320,11 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
   public void drawLine(int x1, int y1, int x2, int y2) {
     canvas.drawLine(x1, y1, x2, y2);
   } 
+  
   /**
    * Draws a polygon outline on the drawing area.
+   * Stroke width can be set using setStroke().
+   * AntiAliasing can be set using setAntiAlias()
    * @param x An array of x coordinates for the corner points of the polygon (related to array y)
    * @param y An array of y coordinates for the corner points of the polygon (related to array x)
    * @param n Number of points in the polygon
@@ -321,7 +333,18 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
     canvas.drawPolygon(x, y, n);
   }
   /**
+   * Draws a polygon outline on the drawing area.
+   * Stroke width can be set using setStroke().
+   * AntiAliasing can be set using setAntiAlias()
+   * @param p The Polygon to draw.
+   */
+  public void drawPolygon(Polygon p) {
+	    canvas.drawPolygon(p);
+	  }
+  
+  /**
    * Draws a filled in polygon on the drawing area.
+   * Stroke width can be set using setStroke().
    * @param x An array of x coordinates for the corner points of the polygon (related to array y)
    * @param y An array of y coordinates for the corner points of the polygon (related to array x)
    * @param n Number of points in the polygon
@@ -330,9 +353,20 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
     canvas.fillPolygon(x, y, n);
   }
   /**
+   * Draws a filled in polygon on the drawing area.
+   * Stroke width can be set using setStroke().
+   * @param p The Polygon to draw.
+   */
+  public void fillPolygon(Polygon p) {
+    canvas.fillPolygon(p);
+  }
+  
+  /**
    * Draws an arc outline on the drawing area. The arc will be inscribed within a rectangle, just
    * like drawOval(), but only part of the oval will be drawn.
    * Draws an oval outline on the drawing area, inscribed within a rectangle.
+   * Stroke width can be set using setStroke().
+   * AntiAliasing can be set using setAntiAlias()
    * @param x Top left X coordinate of the rectangle
    * @param y Top left Y coordinate of the rectangle
    * @param width Width of rectangle in pixels
@@ -347,6 +381,7 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
    * Draws a filled in arc outline on the drawing area (looks like a pie slice). The arc will be 
    * inscribed within a rectangle, just like drawOval(), but only part of the oval will be drawn.
    * Draws an oval outline on the drawing area, inscribed within a rectangle.
+   * AntiAliasing can be set using setAntiAlias()
    * @param x Top left X coordinate of the rectangle
    * @param y Top left Y coordinate of the rectangle
    * @param width Width of rectangle in pixels
@@ -371,6 +406,7 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
   }
   /**
    * Draws a filled in rectangle on the drawing area with rounded corners.
+   * AntiAliasing can be set using setAntiAlias()
    * @param x Top left X coordinate of the rectangle
    * @param y Top left Y coordinate of the rectangle
    * @param width Width in pixels
@@ -407,6 +443,7 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
    * Draws a string on the drawing area using the current font and color.
    * Note that the coordinates specify the bottom left corner rather than the
    * top left corner for drawing.
+   * AntiAliasing can be set using setAntiAlias()
    * @param str The string to draw. 
    * @param x Bottom left X coordinate
    * @param y Bottom left Y coordinate
@@ -444,6 +481,17 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
     super.setFont(f);
     canvas.setFont(f);
   }
+  /**
+   * This sets the stroke size for drawLine ONLY
+   * @param strokeSize in pixels 
+   */
+  public void setStroke(int strokeSize) {
+	  canvas.setStroke(strokeSize);
+  }
+  public void setAntiAlias(boolean onOff) {
+	  canvas.setAntiAlias(onOff);
+  }
+  
   /**
    * Draws a star outline on the screen from (x, y) to (x + width, y + width). Adapted from hsa.
    *

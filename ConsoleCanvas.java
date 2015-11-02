@@ -16,15 +16,21 @@
  * @author Sam Scott
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
+ * 
+ * @version 3.0
  */
-package hsa_ufa;
+package hsa2;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
@@ -42,7 +48,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	/** Window title **/
 	private String title;
 	/** Container of this object **/
-	private hsa_ufa.Console container;
+	private hsa2.Console container;
 
 	// ***** Screen variables *****
 	
@@ -64,6 +70,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	private static final int framesPerSecond = 60;
 	/** Timer object for redrawing screen **/
 	private Timer timer;
+	/* MH added */
+	private int strokeSize = 1;
+	private boolean antiAlias = false;
 
 	// ***** Text input/output variables *****
 	private Font textFont;
@@ -111,7 +120,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	// *** CONSTRUCTORS
 	// ****************
 
-	public ConsoleCanvas(int width, int height, int fontSize, String title, hsa_ufa.Console console)
+	public ConsoleCanvas(int width, int height, int fontSize, String title, hsa2.Console console)
 	{
 		this.container = console;
 		this.title = title;
@@ -197,59 +206,130 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	protected void drawRect(int x, int y, int width, int height)
 	{
-		Graphics g = getOffscreenGraphics();
+		Graphics g = getOffscreenGraphics();		
+		Graphics2D g2 = (Graphics2D) g;
 		g.setColor(foregroundColor);
-		g.drawRect(x, y, width, height);
-	}
+		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		g2.drawRect(x, y, width, height);
+	}	
 	protected void fillOval(int x, int y, int width, int height)
 	{
-		Graphics g = getOffscreenGraphics();
+		Graphics g = getOffscreenGraphics();		
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g.setColor(foregroundColor);
-		g.fillOval(x, y, width, height);
+		g2.fillOval(x, y, width, height);
 	}
 	protected void drawOval(int x, int y, int width, int height)
 	{
-		Graphics g = getOffscreenGraphics();
+		Graphics g = getOffscreenGraphics();		
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g.setColor(foregroundColor);
-		g.drawOval(x, y, width, height);
+		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		g2.drawOval(x, y, width, height);
 	}
-	protected void drawLine(int x1, int y1, int x2, int y2)
+/* ORIGINAL
+ 	protected void drawLine(int x1, int y1, int x2, int y2)
 	{
 		Graphics g = getOffscreenGraphics();
 		g.setColor(foregroundColor);
 		g.drawLine(x1, y1, x2, y2);
 	}
+*/
+	protected void drawLine(int x1, int y1, int x2, int y2)
+	{
+		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
+		g.setColor(foregroundColor);
+		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		g2.drawLine(x1, y1, x2, y2);
+	}
+	protected void drawPolygon(Polygon p){
+		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
+		g.setColor(foregroundColor);
+		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND));
+		g2.drawPolygon(p);
+	}
 	protected void drawPolygon(int[] x, int[] y, int n)
 	{
 		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g.setColor(foregroundColor);
-		g.drawPolygon(x, y, n);
+		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		g2.drawPolygon(x, y, n);
+	}
+	protected void fillPolygon(Polygon p)
+	{
+		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
+		g.setColor(foregroundColor);
+		g2.fillPolygon(p);
 	}
 	protected void fillPolygon(int[] x, int[] y, int n)
 	{
 		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g.setColor(foregroundColor);
-		g.fillPolygon(x, y, n);
+		g2.fillPolygon(x, y, n);
 	}
 	protected void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g.setColor(foregroundColor);
-		g.drawArc(x, y, width, height, startAngle, arcAngle);
+		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		g2.drawArc(x, y, width, height, startAngle, arcAngle);
 	}
 	protected void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g.setColor(foregroundColor);
-		g.fillArc(x, y, width, height, startAngle, arcAngle);
+		g2.fillArc(x, y, width, height, startAngle, arcAngle);
 	}
 	protected void drawRoundRect(int x, int y, int width, int height, int xRadius, int yRadius)	{
 		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g.setColor(foregroundColor);
-		g.drawRoundRect(x, y, width, height, xRadius, yRadius);
+		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		g2.drawRoundRect(x, y, width, height, xRadius, yRadius);
 	}
 	protected void fillRoundRect(int x, int y, int width, int height, int xRadius, int yRadius) {
 		Graphics g = getOffscreenGraphics();
-		g.setColor(foregroundColor);
-		g.fillRoundRect(x, y, width, height, xRadius, yRadius);
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
+		g.setColor(foregroundColor);		
+		g2.fillRoundRect(x, y, width, height, xRadius, yRadius);
 	}
 	protected void draw3DRect(int x, int y, int width, int height, boolean raised)
 	{
@@ -264,15 +344,27 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	protected void drawString(String str, int x, int y) {
 		Graphics g = getOffscreenGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g.setColor(foregroundColor);
 		if (drawStringFont != null)
-			g.setFont(drawStringFont);
-		g.drawString(str, x, y);
+			g2.setFont(drawStringFont);
+		g2.drawString(str, x, y);
 	}
+	
 	public void setFont(Font f) {
 		super.setFont(f);
 		drawStringFont = f;
 	}
+	public void setStroke(int strokeSize) {
+		this.strokeSize = strokeSize;		
+	}	
+	public void setAntiAlias(boolean onOff) {
+		this.antiAlias = onOff;
+	}
+	
 	protected void drawImage(Image img, int x, int y) {
 		boolean success = false;
 		Graphics g = getOffscreenGraphics();

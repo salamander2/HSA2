@@ -1,4 +1,4 @@
-package hsa_ufa;
+package hsa2;
 
 /**
  * The TextOutputFile writes text to a file. The class is a superset of

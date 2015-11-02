@@ -1,4 +1,4 @@
-package hsa_ufa;
+package hsa2;
 
 /**
  * Internal to hsa package.

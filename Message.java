@@ -1,4 +1,4 @@
-package hsa_ufa;
+package hsa2;
 
 /**
  * The Message class displays a dialog box with a message in it until the

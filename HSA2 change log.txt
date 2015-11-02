@@ -1,0 +1,41 @@
+Change Log
+==========
+
+Version 1: 
+	HSA_UFA completely rewritten, reverse engineered from original HSA software written by Tom West. 
+	Based on Swing JFrame and JPanels
+	@author: Sam Scott
+	@date:
+	
+Version 2:
+	various mouse routines added
+	@author Josh Gray
+	@date
+	
+Version 3:
+	AntiAliasing and strokes added.
+	Package name changed from HSA_UFA to HSA2 
+		(which is more concise, less unweildy, and means that we don't need to keep adding on institutions who improve it)
+		 
+	@author Michael Harwood
+	@date   November 2015
+	
+	Methods added: (to Console.java and ConsoleCanvas.java)
+		setStroke(int strokeSize)
+		setAntiAlias(boolean onOff)
+		drawPolygon(Polygon p)
+		fillPolygon(Polygon p)
+	Methods changed: (in Console.java and ConsoleCanvas.java)
+		drawLine
+		drawRect
+		drawOval
+		fillOval
+		drawPolygon
+		fillPolygon
+		drawArc
+		fillArc
+		drawRoundRect
+		fillRoundRect
+		drawString
+	Not changed: drawStar, fillStar, drawMapleLeaf, fillMapleLeaf, draw3DRect, fill3DRect
+		These are not general enough methods to warrant changing IMHO. (the 3DRects don't really look 3D to me)

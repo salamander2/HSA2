@@ -1,4 +1,4 @@
-package hsa_ufa;
+package hsa2;
 
 /**
  * The FatalError class displays an error message and then terminates the
