@@ -5,11 +5,11 @@ package graphics1; // change this to match the name of the package (folder) that
  * file name, rename a few things below, and then add your code and change these comments.
  * 
  * @author Sam Scott, modified by M. Harwood
- **/
+ */
 
 
-import hsa2.Console; // this imports the code from the hsa_new package
-import java.awt.Color;      // this imports code for using colors and fonts
+import hsa2.Console;     // this imports the code from the hsa2 new package
+import java.awt.Color;   // this imports code for using colors and fonts
 import java.awt.Font;
 
 public class ProgramTemplate
