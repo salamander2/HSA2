@@ -209,6 +209,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		Graphics g = getOffscreenGraphics();		
 		Graphics2D g2 = (Graphics2D) g;
 		g.setColor(foregroundColor);
+		if (antiAlias) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		g2.drawRect(x, y, width, height);
 	}	
