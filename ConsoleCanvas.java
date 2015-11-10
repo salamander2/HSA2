@@ -1,3 +1,27 @@
+package hsa2;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Polygon;
+import java.awt.RenderingHints;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+//import java.awt.image.ImageObserver;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
 /**
  * This is a re-implementation of the old hsa console by Holt Software Associates.
  * Re-done from scratch in Swing with much code imported from the old hsa console.
@@ -19,30 +43,6 @@
  * 
  * @version 3.0
  */
-package hsa2;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Polygon;
-import java.awt.RenderingHints;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-
-import javax.swing.JPanel;
-import javax.swing.Timer;
-
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 
 	/** Window title **/
@@ -126,9 +126,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		this.title = title;
 
 		// Sizing
-		setPreferredSize(new Dimension(width, height));
-		setMinimumSize(new Dimension(width, height));
-		setMaximumSize(new Dimension(width, height));
+		this.setPreferredSize(new Dimension(width, height));
+		this.setMinimumSize(new Dimension(width, height));
+		this.setMaximumSize(new Dimension(width, height));
 		buffer = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		this.height = height;
 		this.width = width;
@@ -155,7 +155,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	// ************
 	// *** GRAPHICS
 	// ************
-	protected void clear()
+	void clear()
 	{
 		Graphics g = getOffscreenGraphics();
 		g.setColor(backgroundColor);
@@ -166,7 +166,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		if(xorMode)
 			g.setXORMode(xorColor);
 	}
-	protected void clearRect(int x, int y, int width, int height)
+	void clearRect(int x, int y, int width, int height)
 	{
 		Graphics g = getOffscreenGraphics();
 		g.setColor(backgroundColor);
@@ -176,35 +176,35 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		if(xorMode)
 			g.setXORMode(xorColor);
 	}
-	protected void copyArea(int x, int y, int width, int height, int dx, int dy)
+	void copyArea(int x, int y, int width, int height, int dx, int dy)
 	{
 		Graphics g = getOffscreenGraphics();
 		g.copyArea(x, y, width, height, dx, dy);
 	}
-	protected void setColor(Color c)
+	void setColor(Color c)
 	{
 		foregroundColor = c;
 	}
-	protected void setBackgroundColor(Color c)
+	void setBackgroundColor(Color c)
 	{
 		backgroundColor = c;
 	}
-	protected void setPaintMode()
+	void setPaintMode()
 	{
 		xorMode = false;
 	}
-	protected void setXORMode(Color c)
+	void setXORMode(Color c)
 	{
 		xorMode = true;
 		xorColor = c;
 	}
-	protected void fillRect(int x, int y, int width, int height)
+	void fillRect(int x, int y, int width, int height)
 	{
 		Graphics g = getOffscreenGraphics();
 		g.setColor(foregroundColor);
 		g.fillRect(x, y, width, height);
 	}
-	protected void drawRect(int x, int y, int width, int height)
+	void drawRect(int x, int y, int width, int height)
 	{
 		Graphics g = getOffscreenGraphics();		
 		Graphics2D g2 = (Graphics2D) g;
@@ -215,7 +215,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		g2.drawRect(x, y, width, height);
 	}	
-	protected void fillOval(int x, int y, int width, int height)
+	void fillOval(int x, int y, int width, int height)
 	{
 		Graphics g = getOffscreenGraphics();		
 		Graphics2D g2 = (Graphics2D) g;
@@ -225,7 +225,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g.setColor(foregroundColor);
 		g2.fillOval(x, y, width, height);
 	}
-	protected void drawOval(int x, int y, int width, int height)
+	void drawOval(int x, int y, int width, int height)
 	{
 		Graphics g = getOffscreenGraphics();		
 		Graphics2D g2 = (Graphics2D) g;
@@ -244,7 +244,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g.drawLine(x1, y1, x2, y2);
 	}
 */
-	protected void drawLine(int x1, int y1, int x2, int y2)
+	void drawLine(int x1, int y1, int x2, int y2)
 	{
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
@@ -255,7 +255,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		g2.drawLine(x1, y1, x2, y2);
 	}
-	protected void drawPolygon(Polygon p){
+	void drawPolygon(Polygon p){
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		if (antiAlias) {
@@ -265,7 +265,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND));
 		g2.drawPolygon(p);
 	}
-	protected void drawPolygon(int[] x, int[] y, int n)
+	void drawPolygon(int[] x, int[] y, int n)
 	{
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
@@ -276,7 +276,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		g2.drawPolygon(x, y, n);
 	}
-	protected void fillPolygon(Polygon p)
+	void fillPolygon(Polygon p)
 	{
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
@@ -286,7 +286,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g.setColor(foregroundColor);
 		g2.fillPolygon(p);
 	}
-	protected void fillPolygon(int[] x, int[] y, int n)
+	void fillPolygon(int[] x, int[] y, int n)
 	{
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
@@ -296,7 +296,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g.setColor(foregroundColor);
 		g2.fillPolygon(x, y, n);
 	}
-	protected void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
+	void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		if (antiAlias) {
@@ -306,7 +306,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		g2.drawArc(x, y, width, height, startAngle, arcAngle);
 	}
-	protected void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
+	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		if (antiAlias) {
@@ -315,7 +315,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g.setColor(foregroundColor);
 		g2.fillArc(x, y, width, height, startAngle, arcAngle);
 	}
-	protected void drawRoundRect(int x, int y, int width, int height, int xRadius, int yRadius)	{
+	void drawRoundRect(int x, int y, int width, int height, int xRadius, int yRadius)	{
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		if (antiAlias) {
@@ -325,7 +325,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		g2.drawRoundRect(x, y, width, height, xRadius, yRadius);
 	}
-	protected void fillRoundRect(int x, int y, int width, int height, int xRadius, int yRadius) {
+	void fillRoundRect(int x, int y, int width, int height, int xRadius, int yRadius) {
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		if (antiAlias) {
@@ -334,18 +334,18 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g.setColor(foregroundColor);		
 		g2.fillRoundRect(x, y, width, height, xRadius, yRadius);
 	}
-	protected void draw3DRect(int x, int y, int width, int height, boolean raised)
+	void draw3DRect(int x, int y, int width, int height, boolean raised)
 	{
 		Graphics g = getOffscreenGraphics();
 		g.setColor(foregroundColor);
 		g.draw3DRect(x, y, width, height, raised);
 	}
-	protected void fill3DRect(int x, int y, int width, int height, boolean raised) {
+	void fill3DRect(int x, int y, int width, int height, boolean raised) {
 		Graphics g = getOffscreenGraphics();
 		g.setColor(foregroundColor);
 		g.fill3DRect(x, y, width, height, raised);
 	}
-	protected void drawString(String str, int x, int y) {
+	void drawString(String str, int x, int y) {
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		if (antiAlias) {
@@ -361,14 +361,14 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		super.setFont(f);
 		drawStringFont = f;
 	}
-	public void setStroke(int strokeSize) {
+	void setStroke(int strokeSize) {
 		this.strokeSize = strokeSize;		
 	}	
-	public void setAntiAlias(boolean onOff) {
+	void setAntiAlias(boolean onOff) {
 		this.antiAlias = onOff;
 	}
 	
-	protected void drawImage(Image img, int x, int y) {
+	void drawImage(Image img, int x, int y) {
 		boolean success = false;
 		Graphics g = getOffscreenGraphics();
 		success = g.drawImage (img, x, y, null); 
@@ -386,7 +386,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		if (!success)
 			throw new RuntimeException ("Image not loaded.");
 	}
-	protected void drawImage(Image img, int x, int y, int width, int height) {
+	void drawImage(Image img, int x, int y, int width, int height) {
 		boolean success = false;
 			Graphics g = getOffscreenGraphics();
 			success = g.drawImage (img, x, y, width, height, null);
