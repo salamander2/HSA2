@@ -16,6 +16,7 @@ Version 3:
 	AntiAliasing and strokes added.
 	Package name changed from HSA_UFA to HSA2 
 		(which is more concise, less unweildy, and means that we don't need to keep adding on institutions who improve it)
+	Finished adding comments for JavaDoc (some were already there).	
 		 
 	@author Michael Harwood
 	@date   November 2015
