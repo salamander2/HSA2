@@ -1597,7 +1597,18 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	public void close () {
 		canvas.killThread ();
 		this.dispose ();
-	} // close (void)
+	} 
+	
+	/** 
+	 * A simpler sleep function
+	 * handles the try/catch or "throws InterruptedException" 
+	 * that Thread.sleep() produces.
+	 */
+	public void sleep(long milliSeconds) {		
+		try {
+			Thread.sleep(milliSeconds);
+		} catch (InterruptedException e) {}
+	}
 
 	// **********************
 	// *** MOUSE METHODS
