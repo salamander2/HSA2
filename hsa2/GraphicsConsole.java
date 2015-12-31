@@ -43,14 +43,14 @@ import javax.swing.JPanel;
  * @author Michael Harwood (setStroke, antiAlias)
  * @version 3.0
  */
-public class Console extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	// Constants for setting up the window 
 	private static final long serialVersionUID = 1L;
 	private static final int DEFAULT_HEIGHT = 500;
 	private static final int DEFAULT_WIDTH = 650;
 	private static final int DEFAULT_FONTSIZE = 12;
-	private static final String DEFAULT_NAME = "HSA2 Console";
+	private static final String DEFAULT_NAME = "HSA2 Graphics Console";
 
 	// The main drawing surface
 	private ConsoleCanvas canvas;
@@ -152,50 +152,50 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	// *** CONSTRUCTORS
 	// ****************
 
-	/** Creates default console **/
-	public Console() {
+	/** Creates default GraphicsConsole **/
+	public GraphicsConsole() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_FONTSIZE, DEFAULT_NAME);
 	}
-	/** Creates console with specified font size
+	/** Creates GraphicsConsole with specified font size
 	 * @param fontSize Default font size for println and print **/
-	public Console(int fontSize) {
+	public GraphicsConsole(int fontSize) {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT, fontSize, DEFAULT_NAME);
 	}
-	/** Creates console with specified window name 
-	 * @param name Console window name **/
-	public Console(String name) {
+	/** Creates GraphicsConsole with specified window name 
+	 * @param name GraphicsConsole window name **/
+	public GraphicsConsole(String name) {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_FONTSIZE, name);
 	}
-	/**  Creates console with specified window width and height
-	 * @param width Console width in pixels
-	 * @param height Console height in pixels
+	/**  Creates GraphicsConsole with specified window width and height
+	 * @param width GraphicsConsole width in pixels
+	 * @param height GraphicsConsole height in pixels
 	 */
-	public Console(int width, int height) {
+	public GraphicsConsole(int width, int height) {
 		this(width, height, DEFAULT_FONTSIZE, DEFAULT_NAME);
 	}
-	/** Creates console with specified window width, height, and font size
-	 * @param width Console width in pixels
-	 * @param height Console height in pixels
+	/** Creates GraphicsConsole with specified window width, height, and font size
+	 * @param width GraphicsConsole width in pixels
+	 * @param height GraphicsConsole height in pixels
 	 * @param fontSize Default font size for println and print 
 	 */
-	public Console(int width, int height, int fontSize) {
+	public GraphicsConsole(int width, int height, int fontSize) {
 		this(width, height, fontSize, DEFAULT_NAME);
 	}
-	/** Creates console with specified window width, height, and name
-	 * @param width Console width in pixels
-	 * @param height Console height in pixels
-	 * @param name Console window name
+	/** Creates GraphicsConsole with specified window width, height, and name
+	 * @param width GraphicsConsole width in pixels
+	 * @param height GraphicsConsole height in pixels
+	 * @param name GraphicsConsole window name
 	 */
-	public Console(int width, int height, String name) {
+	public GraphicsConsole(int width, int height, String name) {
 		this(width, height, DEFAULT_FONTSIZE, name);
 	}
-	/** Creates console with specified window width, height, font size, and name (title)
-	 * @param width Console width in pixels
-	 * @param height Console height in pixels
+	/** Creates GraphicsConsole with specified window width, height, font size, and name (title)
+	 * @param width GraphicsConsole width in pixels
+	 * @param height GraphicsConsole height in pixels
 	 * @param fontSize Default font size for println and print 
-	 * @param name Console window name
+	 * @param name GraphicsConsole window name
 	 */
-	public Console(int width, int height, int fontSize, String name) {
+	public GraphicsConsole(int width, int height, int fontSize, String name) {
 		super(name);		
 		makeGUI(width, height, fontSize, name);		
 	}
@@ -804,16 +804,16 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		return canvas.getNumRows();
 	}
 	/**
-	 * Writes a newline to the Console. Adapted from hsa.
+	 * Writes a newline to the GraphicsConsole. Adapted from hsa.
 	 */
 	public void println () {
 		print ("\n");
 	} 
 	/**
 	 * Writes the text representation of an 8-bit integer (a "byte") to
-	 * the Console followed by a newline. Adapted from hsa.
+	 * the GraphicsConsole followed by a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void println (byte number) {
 		print (number);
@@ -821,10 +821,10 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	} 
 	/**
 	 * Writes the text representation of an 8-bit integer (a "byte")
-	 * to the Console with a specified field size followed by a newline.
+	 * to the GraphicsConsole with a specified field size followed by a newline.
 	 * Adapted from hsa.
 	 * 
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void println (byte number, int fieldSize) {
@@ -832,18 +832,18 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		print ("\n");
 	} 
 	/**
-	 * Writes a character to the Console followed by a newline. Adapted from hsa.
+	 * Writes a character to the GraphicsConsole followed by a newline. Adapted from hsa.
 	 *
-	 * @param ch The character to be written to the Console.
+	 * @param ch The character to be written to the GraphicsConsole.
 	 */
 	public void println (char ch) {
 		print (ch);
 		print ("\n");
 	}
 	/**
-	 * Writes a character to the Console with a specified field size. Adapted from hsa.
+	 * Writes a character to the GraphicsConsole with a specified field size. Adapted from hsa.
 	 *
-	 * @param ch The character to be written to the Console.
+	 * @param ch The character to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the character is to be written in.
 	 */
 	public void println (char ch, int fieldSize) {
@@ -852,9 +852,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes a double precision floating point number (a "double") to
-	 * the Console followed by a newline. Adapted from hsa.
+	 * the GraphicsConsole followed by a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void println (double number) {
 		print (number);
@@ -862,10 +862,10 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes a double precision floating point number (a "double") to
-	 * the Console with a specified field size followed by a newline.
+	 * the GraphicsConsole with a specified field size followed by a newline.
 	 * Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void println (double number, int fieldSize) {
@@ -874,10 +874,10 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes a double precision floating point number (a "double") to
-	 * the Console with a specified field size and a specified number of
+	 * the GraphicsConsole with a specified field size and a specified number of
 	 * decimal places followed by a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 * @param decimalPlaces The number of decimal places of the number
 	 *    to be displayed.
@@ -887,20 +887,20 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		print ("\n");
 	}
 	/**
-	 * Writes a floating point number (a "float") to the Console followed by
+	 * Writes a floating point number (a "float") to the GraphicsConsole followed by
 	 * a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void println (float number) {
 		print (number);
 		print ("\n");
 	}
 	/**
-	 * Writes a floating point number (a "float") to the Console with a
+	 * Writes a floating point number (a "float") to the GraphicsConsole with a
 	 * specified field size followed by a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void println (float number, int fieldSize) {
@@ -908,11 +908,11 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		print ("\n");
 	}
 	/**
-	 * Writes a floating point number (a "double") to the Console with a
+	 * Writes a floating point number (a "double") to the GraphicsConsole with a
 	 * specified field size and a specified number of decimal places
 	 * followed by a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 * @param decimalPlaces The number of decimal places of the number
 	 *    to be displayed.
@@ -923,9 +923,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 32-bit integer (an "int") to
-	 * the Console followed by a newline. Adapted from hsa.
+	 * the GraphicsConsole followed by a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void println (int number) {
 		print (number);
@@ -933,10 +933,10 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 32-bit integer (an "int")
-	 * to the Console with a specified field size followed by a newline.
+	 * to the GraphicsConsole with a specified field size followed by a newline.
 	 * Adapted from hsa.
 	 * 
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void println (int number, int fieldSize) {
@@ -945,9 +945,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 64-bit integer (a "long") to
-	 * the Console followed by a newline. Adapted from hsa.
+	 * the GraphicsConsole followed by a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void println (long number) {
 		print (number);
@@ -955,35 +955,35 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 8-bit integer (a "byte") to
-	 * the Console. Adapted from hsa.
+	 * the GraphicsConsole. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void print (byte number) {
 		print ((int) number);
 	}
 	/**
 	 * Writes the text representation of an 8-bit integer (a "byte")
-	 * to the Console with a specified field size. Adapted from hsa.
+	 * to the GraphicsConsole with a specified field size. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void print (byte number, int fieldSize) {
 		print ((int) number, fieldSize);
 	}
 	/**
-	 * Writes a character to the Console. Adapted from hsa.
+	 * Writes a character to the GraphicsConsole. Adapted from hsa.
 	 *
-	 * @param ch The character to be written to the Console.
+	 * @param ch The character to be written to the GraphicsConsole.
 	 */
 	public void print (char ch) {
 		print (String.valueOf (ch));
 	}
 	/**
-	 * Writes a character to the Console with a specified field size. Adapted from hsa.
+	 * Writes a character to the GraphicsConsole with a specified field size. Adapted from hsa.
 	 *
-	 * @param ch The character to be written to the Console.
+	 * @param ch The character to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the character is to be written in.
 	 */
 	public void print (char ch, int fieldSize) {
@@ -997,18 +997,18 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes a double precision floating point number (a "double") to
-	 * the Console. Adapted from hsa.
+	 * the GraphicsConsole. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void print (double number) {
 		print (String.valueOf (number));
 	}
 	/**
 	 * Writes a double precision floating point number (a "double") to
-	 * the Console with a specified field size. Adapted from hsa.
+	 * the GraphicsConsole with a specified field size. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void print (double number, int fieldSize) {
@@ -1065,10 +1065,10 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes a double precision floating point number (a "double") to
-	 * the Console with a specified field size and a specified number of
+	 * the GraphicsConsole with a specified field size and a specified number of
 	 * decimal places. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 * @param decimalPlaces The number of decimal places of the number
 	 *    to be displayed.
@@ -1127,29 +1127,29 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		print (padding + numStr);
 	}
 	/**
-	 * Writes a floating point number (a "float") to the Console. Adapted from hsa.
+	 * Writes a floating point number (a "float") to the GraphicsConsole. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void print (float number) {
 		print (String.valueOf (number));
 	}
 	/**
 	 * Writes a floating point number (a "float") to
-	 * the Console with a specified field size.
+	 * the GraphicsConsole with a specified field size.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void print (float number, int fieldSize) {
 		print ((double) number, fieldSize);
 	}
 	/**
-	 * Writes a floating point number (a "double") to the Console with a
+	 * Writes a floating point number (a "double") to the GraphicsConsole with a
 	 * specified field size and a specified number of decimal places.
 	 * Adapted from hsa.
 	 * 
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 * @param decimalPlaces The number of decimal places of the number
 	 *    to be displayed.
@@ -1159,18 +1159,18 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 32-bit integer (an "int") to
-	 * the Console. Adapted from hsa.
+	 * the GraphicsConsole. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void print (int number) {
 		print (String.valueOf (number));
 	}
 	/**
 	 * Writes the text representation of an 32-bit integer (an "int")
-	 * to the Console with a specified field size. Adapted from hsa.
+	 * to the GraphicsConsole with a specified field size. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void print (int number, int fieldSize) {
@@ -1184,18 +1184,18 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 64-bit integer (a "long") to
-	 * the Console. Adapted from hsa.
+	 * the GraphicsConsole. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void print (long number) {
 		print (String.valueOf (number));
 	}
 	/**
 	 * Writes the text representation of an 64-bit integer (a "long")
-	 * to the Console with a specified field size. Adapted from hsa.
+	 * to the GraphicsConsole with a specified field size. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void print (long number, int fieldSize) {
@@ -1208,9 +1208,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		print (padding + numStr);
 	}
 	/**
-	 * Writes a string to the Console with a specified field size. Adapted from hsa.
+	 * Writes a string to the GraphicsConsole with a specified field size. Adapted from hsa.
 	 *
-	 * @param text The string to be written to the Console.
+	 * @param text The string to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the string is to be written in.
 	 */
 	public void print (String text, int fieldSize) {
@@ -1223,36 +1223,36 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 16-bit integer (a "short") to
-	 * the Console. Adapted from hsa.
+	 * the GraphicsConsole. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void print (short number) {
 		print ((int) number);
 	}
 	/**
 	 * Writes the text representation of an 16-bit integer (a "short")
-	 * to the Console with a specified field size. Adapted from hsa.
+	 * to the GraphicsConsole with a specified field size. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void print (short number, int fieldSize) {
 		print ((int) number, fieldSize);
 	}
 	/**
-	 * Writes the text representation of a boolean to the Console. Adapted from hsa.
+	 * Writes the text representation of a boolean to the GraphicsConsole. Adapted from hsa.
 	 *
-	 * @param value The boolean to be written to the Console.
+	 * @param value The boolean to be written to the GraphicsConsole.
 	 */
 	public void print (boolean value) {
 		print (String.valueOf (value));
 	}
 	/**
-	 * Writes the text representation of a boolean to the Console with a
+	 * Writes the text representation of a boolean to the GraphicsConsole with a
 	 * specified field size. Adapted from hsa.
 	 *
-	 * @param value The boolean to be written to the Console.
+	 * @param value The boolean to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the boolean is to be written in.
 	 */
 	public void print (boolean value, int fieldSize) {
@@ -1265,20 +1265,20 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		print (boolStr + padding);
 	}
 	/**
-	 * Write a string to the Console. Adapted from hsa.
+	 * Write a string to the GraphicsConsole. Adapted from hsa.
 	 *
 	 * @param text
-	 *            The string to be written to the Console
+	 *            The string to be written to the GraphicsConsole
 	 */
 	public void print (String text) {
 		canvas.print(text);
 	}
 	/**
 	 * Writes the text representation of an 64-bit integer (a "long")
-	 * to the Console with a specified field size followed by a newline.
+	 * to the GraphicsConsole with a specified field size followed by a newline.
 	 * Adapted from hsa.
 	 * 
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void println (long number, int fieldSize) {
@@ -1286,19 +1286,19 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		print ("\n");
 	}
 	/**
-	 * Writes a string to the Console followed by a newline. Adapted from hsa.
+	 * Writes a string to the GraphicsConsole followed by a newline. Adapted from hsa.
 	 *
-	 * @param text The string to be written to the Console.
+	 * @param text The string to be written to the GraphicsConsole.
 	 */
 	public void println (String text) {
 		print (text);
 		print ("\n");
 	}
 	/**
-	 * Writes a string to the Console with a specified field size followed by
+	 * Writes a string to the GraphicsConsole with a specified field size followed by
 	 * a newline. Adapted from hsa.
 	 *
-	 * @param text The string to be written to the Console.
+	 * @param text The string to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the string is to be written in.
 	 */
 	public void println (String text, int fieldSize) {
@@ -1307,9 +1307,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 16-bit integer (a "short") to
-	 * the Console followed by a newline. Adapted from hsa.
+	 * the GraphicsConsole followed by a newline. Adapted from hsa.
 	 *
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 */
 	public void println (short number) {
 		print (number);
@@ -1317,10 +1317,10 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Writes the text representation of an 16-bit integer (a "short")
-	 * to the Console with a specified field size followed by a newline.
+	 * to the GraphicsConsole with a specified field size followed by a newline.
 	 * Adapted from hsa.
 	 * 
-	 * @param number The number to be written to the Console.
+	 * @param number The number to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the number is to be written in.
 	 */
 	public void println (short number, int fieldSize) {
@@ -1328,20 +1328,20 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		print ("\n");
 	}
 	/**
-	 * Writes the text representation of a boolean to the Console followed
+	 * Writes the text representation of a boolean to the GraphicsConsole followed
 	 * by a newline. Adapted from hsa.
 	 *
-	 * @param value The boolean to be written to the Console.
+	 * @param value The boolean to be written to the GraphicsConsole.
 	 */
 	public void println (boolean value) {
 		print (value);
 		print ("\n");
 	}
 	/**
-	 * Writes the text representation of a boolean to the Console with a
+	 * Writes the text representation of a boolean to the GraphicsConsole with a
 	 * specified field size followed by a newline. Adapted from hsa.
 	 *
-	 * @param value The boolean to be written to the Console.
+	 * @param value The boolean to be written to the GraphicsConsole.
 	 * @param fieldSize The field width that the boolean is to be written in.
 	 */
 	public void println (boolean value, int fieldSize) {
@@ -1353,7 +1353,7 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	// *** TEXT INPUT METHODS
 	// ************************
 
-	/** reads a character from the console.
+	/** reads a character from the GraphicsConsole.
 	 * 
 	 * @return the character read.
 	 */
@@ -1361,11 +1361,11 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		return canvas.getChar(false);
 	}
 	/**
-	 * Reads a boolean from the Console.
-	 * The actual text in the Console must be either "true" or "false"
+	 * Reads a boolean from the GraphicsConsole.
+	 * The actual text in the GraphicsConsole must be either "true" or "false"
 	 * although case is irrelvant.
 	 *
-	 * @return The boolean value read from the Console.
+	 * @return The boolean value read from the GraphicsConsole.
 	 */
 	public boolean readBoolean () {
 		String s;
@@ -1380,10 +1380,10 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		return (false);
 	}
 	/**
-	 * Reads an 8-bit integer (a "byte") from the Console.
-	 * The actual text in the Console must be a number from -128 to 127.
+	 * Reads an 8-bit integer (a "byte") from the GraphicsConsole.
+	 * The actual text in the GraphicsConsole must be a number from -128 to 127.
 	 *
-	 * @return The byte value read from the Console.
+	 * @return The byte value read from the GraphicsConsole.
 	 */
 	public byte readByte () {
 		String s = readToken ();
@@ -1398,9 +1398,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	}
 	/**
 	 * Reads a double precision floating point number (a "double") from
-	 * the Console.
+	 * the GraphicsConsole.
 	 *
-	 * @return The double value read from the Console.
+	 * @return The double value read from the GraphicsConsole.
 	 */
 	public double readDouble () {
 		Double d;
@@ -1417,9 +1417,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		return (0.0);
 	}
 	/**
-	 * Reads a floating point number (a "float") from the Console.
+	 * Reads a floating point number (a "float") from the GraphicsConsole.
 	 *
-	 * @return The float value read from the Console.
+	 * @return The float value read from the GraphicsConsole.
 	 */
 	public float readFloat () {
 		Float f;
@@ -1436,11 +1436,11 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		return ((float) 0.0);
 	}
 	/**
-	 * Reads a 32-bit integer (an "int") from the Console.
-	 * The actual text in the Console must be a number from
+	 * Reads a 32-bit integer (an "int") from the GraphicsConsole.
+	 * The actual text in the GraphicsConsole must be a number from
 	 * -2147483648 to 2147483647.
 	 *
-	 * @return The int value read from the Console.
+	 * @return The int value read from the GraphicsConsole.
 	 */
 	public int readInt () {
 		String s = readToken ();
@@ -1454,9 +1454,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		return (0);
 	}
 	/**
-	 * Reads a full line of text from the Console.
+	 * Reads a full line of text from the GraphicsConsole.
 	 *
-	 * @return The line of text read from the Console.
+	 * @return The line of text read from the GraphicsConsole.
 	 */
 	public String readLine () {
 		char ch;                                // The character being read in
@@ -1478,9 +1478,9 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		return (s);
 	}
 	/**
-	 * Reads a 64-bit integer (a "long") from the Console.
+	 * Reads a 64-bit integer (a "long") from the GraphicsConsole.
 	 *
-	 * @return The long value read from the Console.
+	 * @return The long value read from the GraphicsConsole.
 	 */
 	public long readLong () {
 		String s = readToken ();                        // The token read in
@@ -1494,10 +1494,10 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		return (0);
 	}
 	/**
-	 * Reads a 16-bit integer (a "short") from the Console.
-	 * The actual text in the Console must be a number from -32768 to 32767.
+	 * Reads a 16-bit integer (a "short") from the GraphicsConsole.
+	 * The actual text in the GraphicsConsole must be a number from -32768 to 32767.
 	 *
-	 * @return The short value read from the Console.
+	 * @return The short value read from the GraphicsConsole.
 	 */
 	public short readShort () {
 		String s = readToken ();
@@ -1592,7 +1592,7 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 	// ************************
 
 	/**
-	 * Closes the console window.
+	 * Closes the GraphicsConsole window.
 	 */
 	public void close () {
 		canvas.killThread ();
@@ -1664,21 +1664,21 @@ public class Console extends JFrame implements MouseListener, MouseMotionListene
 		canvas.removeMouseWheelListener(this);
 	}
 	/**
-	 * Adds MouseListener to the console
+	 * Adds MouseListener to the GraphicsConsole
 	 */
 	public void enableMouse() {
 		canvas.addMouseListener(this);
 	}
 
 	/**
-	 * Adds MouseMotionListener to the console
+	 * Adds MouseMotionListener to the GraphicsConsole
 	 */
 	public void enableMouseMotion() {
 		canvas.addMouseMotionListener(this);
 	}
 
 	/**
-	 * Adds MouseWheelListener to the console
+	 * Adds MouseWheelListener to the GraphicsConsole
 	 */
 	public void enableMouseWheel() {
 		canvas.addMouseWheelListener(this);

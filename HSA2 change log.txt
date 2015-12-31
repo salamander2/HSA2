@@ -1,16 +1,9 @@
 Change Log
 ==========
 
-Version 1: 
-	HSA_UFA completely rewritten, reverse engineered from original HSA software written by Tom West. 
-	Based on Swing JFrame and JPanels
-	@author: Sam Scott
-	@date:
-	
-Version 2:
-	various mouse routines added
-	@author Josh Gray
-	@date
+Version 3.1:
+	Added sleep(long time) to Console.java so that students don't have to catch or throw InterruptedExceptions
+	Changing Console.java to GraphicsWindow.java
 	
 Version 3:
 	AntiAliasing and strokes added.
@@ -40,3 +33,15 @@ Version 3:
 		drawString
 	Not changed: drawStar, fillStar, drawMapleLeaf, fillMapleLeaf, draw3DRect, fill3DRect
 		These are not general enough methods to warrant changing IMHO. (the 3DRects don't really look 3D to me)
+
+	
+Version 2:
+	various mouse routines added
+	@author Josh Gray
+	@date
+	
+Version 1: 
+	HSA_UFA completely rewritten, reverse engineered from original HSA software written by Tom West. 
+	Based on Swing JFrame and JPanels
+	@author: Sam Scott
+	@date:

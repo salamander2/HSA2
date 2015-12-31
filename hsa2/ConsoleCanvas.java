@@ -48,7 +48,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	/** Window title **/
 	private String title;
 	/** Container of this object **/
-	private hsa2.Console container;
+	private hsa2.GraphicsConsole container;
 
 	// ***** Screen variables *****
 	
@@ -104,11 +104,11 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	
 	// New Keyboard variables
 	/** Code for key currently held down **/
-	private int currentKeyCode = Console.VK_UNDEFINED;
+	private int currentKeyCode = GraphicsConsole.VK_UNDEFINED;
 	/** Code for last key pressed **/
 	private int lastKeyCode = currentKeyCode;
 	/** Character currently held down **/
-	private char currentKeyChar = (char) Console.VK_UNDEFINED;
+	private char currentKeyChar = (char) GraphicsConsole.VK_UNDEFINED;
 	/** Last character pressed **/
 	private char lastKeyChar = currentKeyChar;
 	/** Size of keysDown array **/
@@ -120,7 +120,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	// *** CONSTRUCTORS
 	// ****************
 
-	public ConsoleCanvas(int width, int height, int fontSize, String title, hsa2.Console console)
+	public ConsoleCanvas(int width, int height, int fontSize, String title, hsa2.GraphicsConsole console)
 	{
 		this.container = console;
 		this.title = title;
@@ -867,8 +867,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	 */
 	public void keyReleased (KeyEvent e)
 	{
-		currentKeyCode = Console.VK_UNDEFINED;
-		currentKeyChar = (char) Console.VK_UNDEFINED;
+		currentKeyCode = GraphicsConsole.VK_UNDEFINED;
+		currentKeyChar = (char) GraphicsConsole.VK_UNDEFINED;
 		if ((e.getKeyCode () >= 0) & (e.getKeyCode () < numKeyCodes))
 			keysDown [e.getKeyCode()] = false;
 	}
