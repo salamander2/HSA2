@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 4.0:
+	Changed all messages to use JOptionPane: added showDialog() and showInputDialog() methods to GraphicsConsole class
+	Removed un-needed classes Message and CloseableDialog
+	Restricted acessiility of FatalError class.
+	minor bug fix to ConsoleCanvas for printing text
 Version 3.1:
 	Added sleep(long time) to Console.java so that students don't have to catch or throw InterruptedExceptions
 	Changing Console.java to GraphicsWindow.java

@@ -1,21 +1,6 @@
 package hsa2;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Polygon;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  * This is a re-implementation of the old hsa console by Holt Software Associates.
@@ -37,11 +22,11 @@ import javax.swing.JPanel;
  *   - fixed drawImage to be more reliable
  *   - added mouse listener code
  * <p>
- * @author Sam Scott
- * @author Josh Gray (mouse code)
  * @author Tom West (old hsa code)
- * @author Michael Harwood (setStroke, antiAlias)
- * @version 3.0
+ * @author Sam Scott
+ * @author Josh Gray (mouse code) 
+ * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
+ * @version 4.0
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -1609,6 +1594,42 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 			Thread.sleep(milliSeconds);
 		} catch (InterruptedException e) {}
 	}
+	
+	/**
+	 * This uses Swing JOptionPane for dialogs and so removes the need for the Message class.
+	 * It does not display an icon
+	 * @param message to display
+	 * @param title for the popup message box
+	 */
+	public void showDialog(String message, String title) {
+		JOptionPane.showMessageDialog(null, message, title , JOptionPane.PLAIN_MESSAGE);	
+	}
+	/**
+	 * This uses Swing JOptionPane to get text from the user.
+	 * The text can be from one letter, or a word, to a whole line. The text is terminated with Enter.
+	 * It displays the Question icon.
+	 * 
+	 * Sample code:
+	    name = c.showInputDialog("What is your name?", "");
+	    //handle CANCEL option
+		if(name == null){
+			System.out.println("Cancel pressed");
+			System.exit(0); //or do something else
+		}
+		//handle OK option with no text
+		if (name.equals("")) {
+			name = "No Name";
+		}
+	 * 
+	 * @param message to display
+	 * @param title for the popup message box
+	 * @return The string typed in. If the Cancel button is pressed, the return value is equal to null.
+	 * If OK is pressed without anything typed in, the return value is a zero length string.
+	 */
+	public String showInputDialog(String message, String title) {
+		return  JOptionPane.showInputDialog(null, message, title ,JOptionPane.QUESTION_MESSAGE);
+	}
+	
 
 	// **********************
 	// *** MOUSE METHODS
@@ -1846,3 +1867,4 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		this.setVisible(true);
 	}
 }
+

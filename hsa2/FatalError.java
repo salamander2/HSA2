@@ -1,11 +1,6 @@
 package hsa2;
 
 import java.awt.Button;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.Label;
-import java.awt.Panel;
 
 /**
  * The FatalError class displays an error message and then terminates the
@@ -13,14 +8,17 @@ import java.awt.Panel;
  * <p>
  * Full documentation for the classes in the hsa package available at:
  * <br>
- *   http://www.holtsoft.com/java/hsa_package.html
+ *   https://github.com/salamander2/HSA2
  * <p>
  * @author Tom West
- * @version 2.0 99/02/01
+ * @author Michael Harwood
+ * @version 4.0
+ * Changes: switch to using JOptionPane and remove CloseableDialog.java
+ * 			change accessibility from public to default so that it can only be called by other HSA2 classes.
  */
-public class FatalError extends CloseableDialog 
+
+class FatalError
 {
-	private java.awt.Button quitButton;
 	/**
 	 * Contructor - FatalError to be displayed on centre of screen.
 	 *
@@ -29,7 +27,7 @@ public class FatalError extends CloseableDialog
 	public FatalError (String message)
 	{
 		this (message, null);
-	} // Constructor - FatalError (String)
+	}
 	/**
 	 * Contructor - FatalError to be displayed on centre of a specified Frame.
 	 *
@@ -38,30 +36,7 @@ public class FatalError extends CloseableDialog
 	 */
 	public FatalError (String message, Frame frame)
 	{
-		// Create the dialog.
-		super (frame, "Fatal Error");
-
-		setBackground (Color.lightGray);
-
-		// Put the message at the top
-		add ("Center", new Label ("  " + message + "  ", Label.CENTER));
-
-		// Put OK button at bottom
-		quitButton = new Button ("Quit");
-		quitButton.addActionListener (this);
-		Panel p = new Panel ();
-		p.setLayout (new FlowLayout (FlowLayout.CENTER, 0, 0));
-		p.add (quitButton);
-		add ("South", p);
-
-		pack ();
-
-		positionDialog (frame);
-
-		Message.beep ();
-
-		setVisible (true);
-
+		JOptionPane.showMessageDialog(null, message,"Fatal Error", JOptionPane.ERROR_MESSAGE + JOptionPane.OK_OPTION);
 		System.exit (0);
-	} // Constructor - FatalError (String, Frame)
+	}
 } /* FatalError class */

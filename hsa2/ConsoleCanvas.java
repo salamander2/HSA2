@@ -37,11 +37,12 @@ import javax.swing.Timer;
  * Update September 2014: Fixed bug in getRow() and getColumn(); they now report
  * the current cursor position without requiring a print() first.
  * 
+ * @author Michael Harwood (minor text printing bug fix)
  * @author Sam Scott
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
  * 
- * @version 3.0
+ * @version 4.0
  */
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 
@@ -564,7 +565,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 						scrollUpALine ();
 						startRow--;
 					}
-					drawText (currentRow, 1, text.substring (index, index + 1));
+					//FIX for obscure bug in that if you try to print a single character off-screen to the right, the character gets printed twice on the following line instead.
+					//drawText (currentRow, 1, text.substring (index, index + 1));
+					drawText (currentRow, 0, text.substring (index, index + 1));
 					currentCol = 0;
 					actualCol = currentCol;
 					actualRow = currentRow;
