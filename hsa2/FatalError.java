@@ -1,6 +1,7 @@
 package hsa2;
 
-import java.awt.Button;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * The FatalError class displays an error message and then terminates the
@@ -34,7 +35,7 @@ class FatalError
 	 * @param message The message to be displayed in the FatalError dialog box.
 	 * @param frame The Frame that the dialog box should be centred on.
 	 */
-	public FatalError (String message, Frame frame)
+	public FatalError (String message, JFrame frame)
 	{
 		JOptionPane.showMessageDialog(null, message,"Fatal Error", JOptionPane.ERROR_MESSAGE + JOptionPane.OK_OPTION);
 		System.exit (0);

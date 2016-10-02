@@ -438,6 +438,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	/**
 	 * Sets the cursor to the specified row and column.Adapted from hsa.
+	 * @param row the row to position the cursor on
+	 * @param col the column to position the cursor on
 	 */
 	private void setCursorPos (int row, int col)
 	{
@@ -584,7 +586,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	/**
 	 * Returns the next character entered on the keyboard. Ignores characters
 	 * currently in the line buffer.
-	 *
+	 * @param cursor  T/F to indicate whether the cursor is displayed.
 	 * @return The next character entered on the keyboard.
 	 */
 	public synchronized char getChar (boolean cursor)
@@ -730,6 +732,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	/**
 	 * Returns the code for the key currently held down.
+	 * @return the int value for the keycode
 	 **/
 	public synchronized int getKeyCode ()
 	{
@@ -737,6 +740,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	/**
 	 * Returns the char for the key currently held down.
+	 * @return the character typed
 	 **/
 	public synchronized char getKeyChar ()
 	{
@@ -744,6 +748,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	/**
 	 *Returns the code for the last key pressed.
+	 * @return the int value of the keycode
 	 **/
 	public synchronized int getLastKeyCode ()
 	{
@@ -751,6 +756,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	/**
 	 * Returns the char for the last key pressed.
+	 * @return the character typed
 	 **/
 	public synchronized char getLastKeyChar ()
 	{
@@ -916,6 +922,10 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	/**
 	 * Draws the specified text to the screen at the specified row and column
 	 * using the specified foreground and background colours. Adapted from hsa.
+	 * This is imitating the System.out.print() command to use colours on the HSA graphics console.
+	 * @param row  the row that the text will be printed
+	 * @param col  the column that he text starts in
+	 * @param text the text to print
 	 */
 	private void drawText (int row, int col, String text)
 	{
@@ -935,6 +945,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	/**
 	 * Clears a rectangle on console canvas from the specified row and column to
 	 * the end of line. Adapted from hsa.
+	 * @param row the row specified
+	 * @param col the column specified
 	 */
 	private void clearToEOL (int row, int col)
 	{

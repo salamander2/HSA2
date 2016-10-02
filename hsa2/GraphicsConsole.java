@@ -1,6 +1,22 @@
 package hsa2;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Polygon;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * This is a re-implementation of the old hsa console by Holt Software Associates.
@@ -1588,6 +1604,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 * A simpler sleep function
 	 * handles the try/catch or "throws InterruptedException" 
 	 * that Thread.sleep() produces.
+	 * @param milliSeconds  the time to sleep in ms.
 	 */
 	public void sleep(long milliSeconds) {		
 		try {
@@ -1610,16 +1627,17 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 * It displays the Question icon.
 	 * 
 	 * Sample code:
-	    name = c.showInputDialog("What is your name?", "");
-	    //handle CANCEL option
-		if(name == null){
-			System.out.println("Cancel pressed");
-			System.exit(0); //or do something else
-		}
-		//handle OK option with no text
-		if (name.equals("")) {
-			name = "No Name";
-		}
+<pre>
+	name = c.showInputDialog("What is your name?", "");
+	//handle CANCEL option
+	if(name == null){
+		System.out.println("Cancel pressed");
+		System.exit(0); //or do something else
+	}
+	//handle OK option with no text
+	if (name.equals("")) {
+		name = "No Name";
+	}</pre>
 	 * 
 	 * @param message to display
 	 * @param title for the popup message box
@@ -1709,7 +1727,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 * Returns true if the specified button is pressed, false otherwise.
 	 * 
 	 * Buttons are numbered 0, 1 or 2.
-	 * @param mouse button number (0,1,2)
+	 * @param buttonNum mouse button number (0,1,2)
 	 * @return T/F if that button has been pressed.
 	 */
 	public boolean getMouseButton(int buttonNum) {

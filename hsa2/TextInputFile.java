@@ -308,6 +308,7 @@ public class TextInputFile
 	/**
 	 * Reads in input from the keyboard buffer until it hits a
 	 * whitespace, which indicates the end of a token.
+	 * @return the string (word) that was read.
 	 */
 	protected String readAToken ()
 	{
