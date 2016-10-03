@@ -6,6 +6,10 @@ Version 4.0:
 	Removed un-needed classes Message and CloseableDialog
 	Restricted acessiility of FatalError class.
 	minor bug fix to ConsoleCanvas for printing text
+
+	@author Michael Harwood
+	@date	October 2016
+
 Version 3.1:
 	Added sleep(long time) to Console.java so that students don't have to catch or throw InterruptedExceptions
 	Changing Console.java to GraphicsWindow.java
