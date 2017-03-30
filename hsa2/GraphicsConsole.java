@@ -500,7 +500,9 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		canvas.setStroke(strokeSize);
 	}
 	/**
-	 * This turns antialiasing on or off
+	 * This turns antialiasing on or off.
+     * Antialiasing makes likes look a lot smoother, so one normally wants this turned on.
+     * Example: gc.setAntiAlias(true);
 	 * @param onOff set to TRUE or FALSE 
 	 */
 	public void setAntiAlias(boolean onOff) {

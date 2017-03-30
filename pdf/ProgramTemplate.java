@@ -1,24 +1,33 @@
-package graphics1; // change this to match the name of the package (folder) that code is in
-
-/**
+/* HSA2 Graphics Template program 
+ *
  * This is a template for you to copy and use in your programs. You copy the file to a new
  * file name, rename a few things below, and then add your code and change these comments.
  * 
- * @author Sam Scott, modified by M. Harwood
+ * @author M. Harwood
  */
 
+package YOUR_PACKAGE_NAME_HERE; // change this to match the name of the package (folder) that code is in
 
 import hsa2.GraphicsConsole;     // this imports the code from the hsa2 new package
 import java.awt.Color;   // this imports code for using colors and fonts
 import java.awt.Font;
 
-public class ProgramTemplate
+public class ProgramTemplate	//there are three places where this name needs to be changed when yo make a new class. (1)
 {
-  static GraphicsConsole c = new GraphicsConsole(); // You can change this line to make the console bigger or smaller
-  //using ... new Console(800, 600);  or ... new Console(800, 600, "Pong Game"); 
-  
   public static void main(String[] args)
   {
-    // Your code goes here
+    new ProgramTemplate(); // this is the name of your class (2)
   }
+
+  //Global variables here:
+  GraphicsConsole gc = new GraphicsConsole(800, 600, "Drawings");
+
+  ProgramTemplate(){ //constructor. Name of class. (3)
+    //all drawing goes here
+
+	gc.setBackgroundColor(Color.BLACK);
+    gc.clear();
+    //.....
+  }
+  
 }
