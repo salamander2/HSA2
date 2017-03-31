@@ -54,7 +54,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	// ***** Screen variables *****
 	
 	/** Off screen buffer **/
-	private final BufferedImage buffer;
+	//private final BufferedImage buffer;
+	private BufferedImage buffer;
 	/** Foreground color **/
 	private Color foregroundColor = Color.black;
 	/** Background color **/
@@ -133,6 +134,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		buffer = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		this.height = height;
 		this.width = width;
+		
 		// Adapted from old hsa code
 		textFont = new Font("monospaced", Font.PLAIN, fontSize);
 		FontMetrics fm = getFontMetrics(textFont);
@@ -369,6 +371,18 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		this.antiAlias = onOff;
 	}
 	
+	//create a new buffered image if the JFrame is resized.
+	void doResizing() {
+		int width=this.getWidth();
+		int height=this.getHeight();
+		this.setPreferredSize(new Dimension(width, height));
+		this.setMinimumSize(new Dimension(width, height));
+		this.setMaximumSize(new Dimension(width, height));
+		buffer = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+		this.height = height;
+		this.width = width;
+	
+	}
 	void drawImage(Image img, int x, int y) {
 		boolean success = false;
 		Graphics g = getOffscreenGraphics();

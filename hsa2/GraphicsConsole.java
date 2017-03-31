@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Polygon;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -44,7 +46,7 @@ import javax.swing.JPanel;
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
  * @version 4.0
  */
-public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
 	// Constants for setting up the window 
 	private static final long serialVersionUID = 1L;
@@ -507,6 +509,19 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 */
 	public void setAntiAlias(boolean onOff) {
 		canvas.setAntiAlias(onOff);
+	}
+	/**
+	 * This allows the GraphicsConsole JFrame to be resized
+	 * @param resizeOn set to TRUE or FALSE 
+	 */
+	public void setResizable(boolean resizeOn) {
+		super.setResizable(resizeOn);
+		if (resizeOn) {
+			canvas.addComponentListener(this);
+		} else {
+			//canvas.removeComponentListener(this); //NO. Null pointer error!
+		}
+			
 	}
 
 	/**
@@ -1803,32 +1818,38 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 * "Background" mouse methods 
 	 * (i.e., don't try to invoke these directly!)
 	 * *********************************************/
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
 		mouseClick = e.getClickCount();
 	}
 
+	@Override
 	public void mouseDragged(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
 	}
 
+	@Override
 	public void mouseEntered(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
 	}
 
+	@Override
 	public void mouseExited(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
 	}
 
+	@Override
 	public void mouseMoved(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
@@ -1842,7 +1863,8 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 			mouseButton[ 2 ] = true;
 
 	}
-
+	
+	@Override
 	public void mouseReleased(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
@@ -1858,6 +1880,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 
 	}
 
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
@@ -1865,6 +1888,17 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		mouseWheelRotation += e.getWheelRotation();
 		mouseWheelUnitsToScroll += e.getUnitsToScroll();
 	}
+	
+	@Override
+	public void componentResized(ComponentEvent e) {
+		canvas.doResizing();
+	}
+	@Override
+	public void componentMoved(ComponentEvent e) {}
+	@Override
+	public void componentShown(ComponentEvent e) {}
+	@Override
+	public void componentHidden(ComponentEvent e) {}
 
 	// **********************
 	// *** NON-PUBLIC METHODS
