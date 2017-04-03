@@ -42,7 +42,7 @@ import javax.swing.Timer;
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
  * 
- * @version 4.0
+ * @version 4.1
  */
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 
