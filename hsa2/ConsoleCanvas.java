@@ -373,6 +373,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	
 	//create a new buffered image if the JFrame is resized.
 	void doResizing() {
+		if (width == this.getWidth() && height == this.getHeight()) return;
 		int width=this.getWidth();
 		int height=this.getHeight();
 		this.setPreferredSize(new Dimension(width, height));
@@ -381,8 +382,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		buffer = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		this.height = height;
 		this.width = width;
-	
 	}
+	
 	void drawImage(Image img, int x, int y) {
 		boolean success = false;
 		Graphics g = getOffscreenGraphics();

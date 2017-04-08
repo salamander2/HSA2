@@ -521,7 +521,6 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		} else {
 			//canvas.removeComponentListener(this); //NO. Null pointer error!
 		}
-			
 	}
 
 	/**
@@ -1868,7 +1867,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public void mouseReleased(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
-		mouseClick = e.getClickCount();
+		mouseClick = e.getClickCount(); //for better response when using gc.getMouseClick()
 
 		if (e.getButton() == MouseEvent.BUTTON1)
 			mouseButton[ 0 ] = false;
