@@ -1822,7 +1822,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public void mouseClicked(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
-		mouseClick = e.getClickCount();
+		//mouseClick = e.getClickCount(); //moved to mouseReleased for faster response
 	}
 
 	@Override
@@ -1868,6 +1868,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public void mouseReleased(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
+		mouseClick = e.getClickCount();
 
 		if (e.getButton() == MouseEvent.BUTTON1)
 			mouseButton[ 0 ] = false;
