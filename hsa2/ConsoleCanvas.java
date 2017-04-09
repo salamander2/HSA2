@@ -42,7 +42,7 @@ import javax.swing.Timer;
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
  * 
- * @version 4.1
+ * @version 4.2
  */
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 
@@ -371,7 +371,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		this.antiAlias = onOff;
 	}
 	
-	//create a new buffered image if the JFrame is resized.
+	//create a new buffered image if and only if the JFrame is resized.
 	void doResizing() {
 		if (width == this.getWidth() && height == this.getHeight()) return;
 		int width=this.getWidth();
@@ -997,6 +997,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 			g.drawImage(buffer, 0, 0, width, height, this);
 		}
 	}
+	/* This is the action performed for the Swing Timer that is started in the constructor */
+	@Override
 	public void actionPerformed (ActionEvent e)
 	{
 		if (cursorFlashing)

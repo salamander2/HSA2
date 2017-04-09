@@ -44,7 +44,7 @@ import javax.swing.JPanel;
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
- * @version 4.1
+ * @version 4.2
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -192,15 +192,27 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public GraphicsConsole(int width, int height, String name) {
 		this(width, height, DEFAULT_FONTSIZE, name);
 	}
+
 	/** Creates GraphicsConsole with specified window width, height, font size, and name (title)
+	 * invokeAnd Wait() is used to make HSA2 thread safe, since Timers can be used to update graphics.
+	 * and invokeLater() does not return fast enough, and so causes null pointer errors for gc.methods
+	 * 
 	 * @param width GraphicsConsole width in pixels
 	 * @param height GraphicsConsole height in pixels
 	 * @param fontSize Default font size for println and print 
 	 * @param name GraphicsConsole window name
 	 */
-	public GraphicsConsole(int width, int height, int fontSize, String name) {
-		super(name);		
-		makeGUI(width, height, fontSize, name);		
+	public GraphicsConsole(int width, int height, int fontSize, String name) {		 
+		super(name);
+		try {
+			javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+			    public void run() {
+			    	makeGUI(width, height, fontSize, name);
+			    }
+			});
+		} catch (InvocationTargetException | InterruptedException e) {
+			e.printStackTrace();
+		}	
 	}
 
 	// *************************************
@@ -1920,5 +1932,6 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		this.pack();
 		this.setVisible(true);
 	}
+	
 }
 

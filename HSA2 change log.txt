@@ -1,5 +1,10 @@
 Change Log
 ==========
+Version 4.2:
+	Improved the resize canvas fix from previous release.
+	Changed the mouse events so that getMouseClicks() responds much faster (moved it from mouseClicked() to mouseReleased() )
+	Wrapped the GUI creation in "javax.swing.SwingUtilities.invokeAndWait(new Runnable() {" so that HSA2 is (more) thread-safe.
+
 Version 4.1:
 	Fixed painting canvas upon resizing the screen (bigger). 
 	This involves ConsoleCanvas.java making a new BufferedImage of the correct size
