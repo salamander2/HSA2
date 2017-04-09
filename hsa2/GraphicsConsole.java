@@ -206,9 +206,9 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		super(name);
 		try {
 			javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
-			    public void run() {
-			    	makeGUI(width, height, fontSize, name);
-			    }
+				public void run() {
+					makeGUI(width, height, fontSize, name);
+				}
 			});
 		} catch (InvocationTargetException | InterruptedException e) {
 			e.printStackTrace();
