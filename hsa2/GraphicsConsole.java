@@ -210,7 +210,10 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 					makeGUI(width, height, fontSize, name);
 				}
 			});
+		} catch (Exception e) {
+/* this only works in Java 8++
 		} catch (InvocationTargetException | InterruptedException e) {
+*/
 			e.printStackTrace();
 		}	
 	}
