@@ -12,7 +12,7 @@ import hsa2.GraphicsConsole;     // this imports the code from the hsa2 new pack
 import java.awt.Color;   // this imports code for using colors and fonts
 import java.awt.Font;
 
-public class ProgramTemplate	//there are three places where this name needs to be changed when yo make a new class. (1)
+public class ProgramTemplate	//there are three places where this name needs to be changed when you make a new class. (1)
 {
   public static void main(String[] args)
   {
