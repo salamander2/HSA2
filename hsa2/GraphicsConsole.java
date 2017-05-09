@@ -528,12 +528,15 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	/**
 	 * This allows the GraphicsConsole JFrame to be resized
 	 * @param resizeOn set to TRUE or FALSE 
-	 */
+	 * There is a bug in Java that often adds a 10px border to the right and bottom sides when JFrame.setResizable() is run
+	 * see http://stackoverflow.com/questions/11225144/java-setresizablefalse-changes-the-window-size-swing
+	 * So try to avoid running it unncessarily. */
 	public void setResizable(boolean resizeOn) {
-		super.setResizable(resizeOn);
 		if (resizeOn) {
+			super.setResizable(true);
 			canvas.addComponentListener(this);
 		} else {
+			if (super.isResizable()) super.setResizable(false);
 			//canvas.removeComponentListener(this); //NO. Null pointer error!
 		}
 	}
