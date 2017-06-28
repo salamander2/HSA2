@@ -361,12 +361,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g2.drawString(str, x, y);
 	}
 	@Override
-	public void setFont(Font f) {
-		drawStringFont = f;
-		Font oldFont = this.getFont();
-		if (oldFont.equals(f)) return;
-
+	public void setFont(Font f) {		
 		super.setFont(f);
+		drawStringFont = f;
 	}
 	void setStroke(int strokeSize) {
 		this.strokeSize = strokeSize;		
