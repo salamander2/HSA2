@@ -3,6 +3,7 @@ Change Log
 Version 4.3
 	ConsoleCanvas.java
 		Added clearKeysDown() to clear all keys for when isKeyDown() is used. This is needed for showDialog() because it will not detect the release of keys.
+		Prevent calls to Jpanel.setFont() if the font has not changed [in this.setFont() and this.drawString()]
 	GraphicsConsole.java
 		Fixed setResize() so that it will not resize unless it is changing from false to true. This prevents a 10px border from appearing on the R and Bottom.
 		Added call to clearKeysDown() in showDialog() and showInputDialog

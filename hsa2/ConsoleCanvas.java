@@ -348,6 +348,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g.setColor(foregroundColor);
 		g.fill3DRect(x, y, width, height, raised);
 	}
+	//MH. Prevent calls to setFont() if the font has not changed.
 	void drawString(String str, int x, int y) {
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
@@ -355,14 +356,17 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
 		g.setColor(foregroundColor);
-		if (drawStringFont != null)
+		if (drawStringFont != null && !(drawStringFont.equals(this.getFont()))
 			g2.setFont(drawStringFont);
 		g2.drawString(str, x, y);
 	}
 	
-	public void setFont(Font f) {
-		super.setFont(f);
+	void setFont(Font f) {
 		drawStringFont = f;
+		Font oldFont = this.getFont();
+		if (oldFont.equals(f)) return;
+
+		super.setFont(f);
 	}
 	void setStroke(int strokeSize) {
 		this.strokeSize = strokeSize;		
