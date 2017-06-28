@@ -1,5 +1,13 @@
 Change Log
 ==========
+Version 4.3
+	ConsoleCanvas.java
+		Added clearKeysDown() to clear all keys for when isKeyDown() is used. This is needed for showDialog() because it will not detect the release of keys.
+	GraphicsConsole.java
+		Fixed setResize() so that it will not resize unless it is changing from false to true. This prevents a 10px border from appearing on the R and Bottom.
+		Added call to clearKeysDown() in showDialog() and showInputDialog
+		Modified setFont() so that it only calls canvas.setFont() if the font has changed from the previous font.
+
 Version 4.2:
 	Improved the resize canvas fix from previous release.
 	Changed the mouse events so that getMouseClicks() responds much faster (moved it from mouseClicked() to mouseReleased() )

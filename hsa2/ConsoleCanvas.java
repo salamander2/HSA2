@@ -42,7 +42,7 @@ import javax.swing.Timer;
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
  * 
- * @version 4.2
+ * @version 4.3
  */
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 
@@ -789,6 +789,14 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 			return keysDown[(int)key];
 		return false;
 	}
+
+ 	//MH. June 2017. Needed for showDialog() in the middle of a game. Not public.
+        synchronized void clearKeysDown() {
+                for (int i=0; i< keysDown.length; i++) {
+                        keysDown[i] = false;
+                }
+        }
+
 
 	// **********************
 	// *** UTILITY METHODS

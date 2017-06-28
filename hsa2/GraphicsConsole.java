@@ -44,7 +44,7 @@ import javax.swing.JPanel;
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
- * @version 4.2
+ * @version 4.3
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -503,11 +503,18 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	}
 	/**
 	 * Sets the font for drawString (not for print or println)
+	 * v4.3 Only sets the font if the font has changed (because setting fonts slows graphics down a lot).
 	 * @param f The new font
 	 */
 	public void setFont(Font f) {
-		super.setFont(f);
-		canvas.setFont(f);
+		Font oldFont = canvas.getFont();
+		if (oldFont.equals(f)) return;
+		
+		//MH: Is this necessary?
+		//super.setFont(f);	//set the JFrame font
+				
+		canvas.setFont(f);	//set the JPanel font
+		
 	}
 	/**
 	 * This sets the stroke size for drawLine ONLY
@@ -1653,6 +1660,9 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 * @param title for the popup message box
 	 */
 	public void showDialog(String message, String title) {
+		//MH. June 2017
+                //clear all keys that are being pressed down
+                canvas.clearKeysDown();
 		JOptionPane.showMessageDialog(null, message, title , JOptionPane.PLAIN_MESSAGE);	
 	}
 	/**
@@ -1679,6 +1689,9 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 * If OK is pressed without anything typed in, the return value is a zero length string.
 	 */
 	public String showInputDialog(String message, String title) {
+		//MH. June 2017
+                //clear all keys that are being pressed down
+                canvas.clearKeysDown();
 		return  JOptionPane.showInputDialog(null, message, title ,JOptionPane.QUESTION_MESSAGE);
 	}
 	
