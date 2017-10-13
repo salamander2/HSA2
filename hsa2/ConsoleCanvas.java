@@ -348,7 +348,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		g.setColor(foregroundColor);
 		g.fill3DRect(x, y, width, height, raised);
 	}
-	//MH. Prevent calls to setFont() if the font has not changed.
+	//MH. Prevent calls to g2.setFont() if the font has not changed.
 	void drawString(String str, int x, int y) {
 		Graphics g = getOffscreenGraphics();
 		Graphics2D g2 = (Graphics2D) g;
@@ -356,10 +356,11 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
 		g.setColor(foregroundColor);
-		if ( drawStringFont != null && !(drawStringFont.equals(this.getFont())) )
+		if ( drawStringFont != null && !(drawStringFont.equals(g2.getFont())) )
 			g2.setFont(drawStringFont);
 		g2.drawString(str, x, y);
 	}
+	//setFont does not actually seem to do much! It sets the font of the JComponent
 	@Override
 	public void setFont(Font f) {		
 		super.setFont(f);
