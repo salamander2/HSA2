@@ -797,6 +797,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
                 for (int i=0; i< keysDown.length; i++) {
                         keysDown[i] = false;
                 }
+		currentKeyChar = (char) GraphicsConsole.VK_UNDEFINED;
+		currentKeyCode = GraphicsConsole.VK_UNDEFINED;
         }
 
 
