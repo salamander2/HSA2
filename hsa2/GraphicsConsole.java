@@ -44,7 +44,7 @@ import javax.swing.JPanel;
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
- * @version 4.3
+ * @version 4.4
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -150,6 +150,8 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 
 	private boolean mouseButton[] = { false, false, false };
 	private int mouseX = 0, mouseY = 0, mouseClick = 0, mouseWheelRotation = 0, mouseWheelUnitsToScroll = 0;
+	private boolean mouseDrag = false;
+	private Point startDrag, endDrag;
 
 	// ****************
 	// *** CONSTRUCTORS
@@ -1842,7 +1844,46 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public int getMouseY() {
 		return mouseY;
 	}
- 
+
+	/**
+	* Returns true of mouse is being dragged (button down and mouse moving triggers a drag event)
+	*/ 
+	public boolean isMouseDragged() {
+		return mouseDrag;
+	}
+	
+	/**
+	* Returns the distance dragged in the x-axis (positive or negative)
+	* @return distance in pixels dragged in x-direction
+	*/
+	public int getMouseDX() {
+		if (endDrag == null || startDrag == null) return 0;
+		return endDrag.x - startDrag.x;		
+	}
+	
+	/**
+	* Returns the distance dragged in the y-axis (positive or negative)
+	* @return distance in pixels dragged in y-direction
+	*/
+	public int getMouseDY() {
+		if (endDrag == null || startDrag == null) return 0;
+		return endDrag.y - startDrag.y;
+	}
+	/* Sample code for dragging event (rectangle r1)
+	 * Note that oldx and oldy are global instance variables to keep track of the position of the rectangle before it started dragging.
+ 	 * The speed at which something can be dragged is a bit slow. 
+
+		if (r1.contains(gc.getMouseX(), gc.getMouseY())) {
+			if (gc.isMouseDragged()) {		
+				r1.x = oldx + gc.getMouseDX();
+				r1.y = oldy + gc.getMouseDY();
+			} else {			
+				oldx = r1.x;
+				oldy = r1.y;
+			}
+		}
+	*/
+
 	/* *********************************************
 	 * MOUSE LISTENER EVENTS
 	 * "Background" mouse methods 
@@ -1859,6 +1900,8 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public void mouseDragged(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
+		endDrag = new Point(e.getX(), e.getY());
+		mouseDrag = true;
 	}
 
 	@Override
@@ -1891,7 +1934,9 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 
 		else if (e.getButton() == MouseEvent.BUTTON3)
 			mouseButton[ 2 ] = true;
-
+		
+		startDrag = new Point(e.getX(), e.getY());
+		endDrag = startDrag;
 	}
 	
 	@Override
@@ -1908,7 +1953,9 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 
 		else if (e.getButton() == MouseEvent.BUTTON3)
 			mouseButton[ 2 ] = false;
-
+	
+		mouseDrag = false;
+		startDrag = endDrag = null;
 	}
 
 	@Override
