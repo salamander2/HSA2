@@ -4,8 +4,16 @@
 
 *The intent of this software is to allow new Java programmers to start using graphics without having to learn Swing first.*
 
+HSA2 does the following: 
+* provides a JPanel to do graphics on (called "GraphicsConsole"). 
+* hides all of the event listeners for the mouse and keyboard and implements polling instead. This is so students can start using keyboard and mouse input immediately without having to learn about events and event listeners
+* there is no possibility of adding JButtons, JLabels, or other Swing components to the JPanel, but as one can see from the examples, they're not really necessary.
+
 ### The PDF files contain useful documentation.
-At some point I may update them to reflect the changes and additions that I've made. Some sample code might also be useful.
+
+### There are sample programs and tutorials for you to work through. See the folder "programs"
+
+
 
 > Limitations:
 > * All keyboard input is handled through the Swing KeyListener. 
