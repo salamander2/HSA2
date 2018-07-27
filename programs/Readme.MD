@@ -1,5 +1,8 @@
 # Sample programs using HSA2
 
-First ...
+:one: Copy and run HSB_colours.java
+   (HSB stands for the colour model Hue-Saturation-Brightness)
 
-Next ...
+:two: Go into the folder "first_program" and read the PDF there. Follow the instructions and you should end up with a nice program called Fading.java
+
+:three: Have a look at the three sample programs that grade 11 students wrote. Try them out.
