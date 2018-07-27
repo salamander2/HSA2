@@ -4,22 +4,27 @@
 
 *The intent of this software is to allow new Java programmers to start using graphics without having to learn Swing first.*
 
-HSA2 does the following: 
-* provides a JPanel to do graphics on (called "GraphicsConsole"). 
-* hides all of the event listeners for the mouse and keyboard and implements polling instead. This is so students can start using keyboard and mouse input immediately without having to learn about events and event listeners
-* there is no possibility of adding JButtons, JLabels, or other Swing components to the JPanel, but as one can see from the examples, they're not really necessary.
+### Features
+* provides a JPanel inside a JFrame to draw graphics on (called "GraphicsConsole"). 
+* hides all of the event listeners for the mouse and keyboard and implements _polling_ instead. This is so students can start using keyboard and mouse input immediately without having to learn about events and event listeners
+* uses all of the Swing drawing commands on the Graphics object (e.g. drawString(), fillOval()).
+* works with Images, ImageIcons, and BufferedImages
+* provides a simple implementation of JOPtionPanes for dialog boxes
+
+### Limitations:
+* All keyboard input is handled through the Swing KeyListener. 
+* There is no error handling for text input: the program displays a message and then ends immediately.
+* There is some flickering still with animated images. Using the `syncrhonized` keyword helps. 
+* No JButtons, JLabels, or other Swing components can be added to the JPanel, but as one can see from the examples, they're not really necessary.
+* most Graphics2D functions do not work (like .rotate()).  Antialiasing is implmented.
+* only one JPanel is created per JFrame (GraphicsConsole), but you can have multiple GraphicsConsoles
+
+These limitations will not be fixed. The solution is to begin programming in Swing or JavaFX.
 
 ### The PDF files contain useful documentation.
 
 ### There are sample programs and tutorials for you to work through. See the folder "programs"
 
-
-
-> Limitations:
-> * All keyboard input is handled through the Swing KeyListener. 
-> * There is no error handling for text input: the program displays a message and then ends immediately.
-> * There is some flickering still with animated images. 
-These limitations will not be fixed. The solution is to begin programming in Swing or JavaFX.
 
 ----
 
