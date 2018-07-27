@@ -1,5 +1,12 @@
 Change Log
 ==========
+
+Version 4.4
+	GraphicsConsole.java
+		Added code for mouse dragging. Added methods getMouseDX(), getMouseDY(), isMouseDragged(). 
+		See sample code for how to use this
+
+
 Version 4.3
 	ConsoleCanvas.java
 		Added clearKeysDown() to clear all keys for when isKeyDown() is used. This is needed for showDialog() because it will not detect the release of keys.
