@@ -7,7 +7,10 @@ We'll be making a block breaking game that's flexible enough to be extended as y
 
 **Controls:** the keyboard arrow keys will be controlling the paddle, but there is code also so that it can be controlled by the mouse.
 
-## EXTENSIONS
+>>> Go through all the 5 steps. 
+
+
+## EXTENSIONS when done
 
 There are lots of possibilities for you to expand on this.
 
@@ -19,5 +22,3 @@ There are lots of possibilities for you to expand on this.
  * Make the blocks move back and forth and down (You'll probably need a separate timer for this)
  * Add bullets/lasers from your space ship when you press <SPACE>
  * Have the aliens drop bomb onto you
-
-DONE! 
