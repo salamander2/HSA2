@@ -38,5 +38,7 @@ To install into Ecplise:
 
 See "HSA Change log.txt" for list of changes (and also look at the changes using Git).
 
+### :boom: Please let me know of any bugs or enhancements (feel free to submit code).
+
 ~~~~~~
 This repository is at https://github.com/salamander2/HSA2
