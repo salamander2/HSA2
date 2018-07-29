@@ -7,7 +7,7 @@ We'll be making a block breaking game that's flexible enough to be extended as y
 
 **Controls:** the keyboard arrow keys will be controlling the paddle, but there is code also so that it can be controlled by the mouse.
 
->>> Go through all the 5 steps. 
+:red_circle: Go through all the 5 steps. :red_circle:
 
 
 ## EXTENSIONS when done
