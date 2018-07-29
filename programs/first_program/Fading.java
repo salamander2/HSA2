@@ -1,5 +1,6 @@
 package graphics1;
 
+/* Program to draw random coloured circles on the screen */
 
 import hsa2.GraphicsConsole;
 import java.awt.Color;
@@ -29,9 +30,9 @@ public class Fading {
 		while(true) {
 			gc.clear();
 			
-			//make random numbers for location (based on 800x600)
-			int rx = (int) ((Math.random()* 700)+50);
-			int ry = (int) ((Math.random()* 500)+50);
+			//make random numbers for location (based on 800x600). There is a 40 pixel margin around the balls.
+			int rx = (int) ((Math.random()* 680)+40);
+			int ry = (int) ((Math.random()* 480)+40);
 
 			gc.fillOval(rx,ry,size,size);
 
