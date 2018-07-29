@@ -1,4 +1,4 @@
-//package animation;
+package animation;
 
 /* Tutorial: making a block breaking game using HSA2 library for Java  */
 
