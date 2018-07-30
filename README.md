@@ -24,7 +24,8 @@ These limitations will not be fixed. The solution is to begin programming in Swi
 ### The PDF files contain useful documentation.
 
 ### There are sample programs and tutorials for you to work through. See the folder "programs"
-
+ 
+### :movie_camera: I've just made a YouTube channel with some useful videos. URL: https://www.youtube.com/channel/UCvdhhpYkAm7UBFUWOIj3mzw (Youtube channel "Salamander2")
 
 ----
 
