@@ -270,7 +270,7 @@ public class BallCross {
 	}
 }
 
-/* Marking: 100%
+/* Marking: 
 
  + comments: author etc.
  X NO instructions - what keys to use, etc. What the purpose is

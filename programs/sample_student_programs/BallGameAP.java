@@ -184,7 +184,7 @@ public class BallGameAP {
 	}
 }
 
-/* Marking  90%
+/* Marking: 
 
  X no comment: author etc.
  X no explanation of the program's purpose

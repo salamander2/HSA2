@@ -292,7 +292,7 @@ public class MazeCraze implements ActionListener {
 
 } //end of class
 
-/* Marking: 95%
+/* Marking:
 
  + commment: author
  + lots comments in code (beyond what the teacher wrote) 
