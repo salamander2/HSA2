@@ -36,6 +36,12 @@ public class BallGameAP {
 
 	BallGameAP() {
 		setup();
+		
+		//wait for mouse click
+		while (gc.getMouseClick() == 0) {
+			gc.sleep(100);
+		}
+
 		//main loop
 		while(gc.getKeyCode()!= 'Q') {
 			follow();
@@ -59,6 +65,7 @@ public class BallGameAP {
 		gc.setAntiAlias(true);
 		gc.setTitle("Ball Collision");
 		gc.setLocationRelativeTo(null);
+		gc.enableMouse();
 		gc.enableMouseMotion();
 		b1=new Ball(SCRW);
 		b2=new Ball(SCRH);
