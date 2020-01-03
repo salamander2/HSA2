@@ -1,4 +1,4 @@
-package hsa2;
+package ca.quarkphysics.hsa2;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

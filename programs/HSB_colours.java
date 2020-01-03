@@ -1,6 +1,6 @@
 package graphics1;
 
-import hsa2.GraphicsConsole; 		
+import ca.quarkphysics.hsa2.GraphicsConsole; 		
 import java.awt.Color;
 
 public class HSB_colours

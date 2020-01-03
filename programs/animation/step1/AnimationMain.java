@@ -10,7 +10,7 @@ package animation;
 *******************************************************************************************/
 
 //Always check to make sure that Eclipse hasn't added in some weird import. It tends to do that when you cut and paste code.
-import hsa2.GraphicsConsole;
+import ca.quarkphysics.hsa2.GraphicsConsole;
 import java.awt.Color;
 
 public class AnimationMain {

@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import hsa2.GraphicsConsole;
+import ca.quarkphysics.hsa2.GraphicsConsole;
 
 public class MazeCraze implements ActionListener {
 	 class BallMaze extends Rectangle {

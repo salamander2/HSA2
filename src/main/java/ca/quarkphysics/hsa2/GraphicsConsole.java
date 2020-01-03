@@ -1,4 +1,4 @@
-package hsa2;
+package ca.quarkphysics.hsa2;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -54,7 +54,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	private static final int DEFAULT_HEIGHT = 500;
 	private static final int DEFAULT_WIDTH = 650;
 	private static final int DEFAULT_FONTSIZE = 12;
-	private static final String DEFAULT_NAME = "HSA2 Graphics Console";
+	private static final String DEFAULT_NAME = "ca.quarkphysics.hsa2 Graphics Console";
 
 	// The main drawing surface
 	private ConsoleCanvas canvas;
@@ -197,7 +197,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	}
 
 	/** Creates GraphicsConsole with specified window width, height, font size, and name (title)
-	 * invokeAnd Wait() is used to make HSA2 thread safe, since Timers can be used to update graphics.
+	 * invokeAnd Wait() is used to make ca.quarkphysics.hsa2 thread safe, since Timers can be used to update graphics.
 	 * and invokeLater() does not return fast enough, and so causes null pointer errors for gc.methods
 	 * 
 	 * @param width GraphicsConsole width in pixels

@@ -2,7 +2,7 @@ package graphics1;
 
 /* Program to draw random coloured circles on the screen */
 
-import hsa2.GraphicsConsole;
+import ca.quarkphysics.hsa2.GraphicsConsole;
 import java.awt.Color;
 
 public class Fading {

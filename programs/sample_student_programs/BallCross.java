@@ -12,7 +12,7 @@ The program is being published for illustrative purposes only.
 import java.awt.Color;
 import java.awt.Rectangle;
 
-import hsa2.GraphicsConsole;
+import ca.quarkphysics.hsa2.GraphicsConsole;
 
 public class BallCross {
 

@@ -22,7 +22,7 @@ Note that the keyboard moving still needs a bit of fixing up: you can move the p
 
 ********************************************************************************************/
 
-import hsa2.GraphicsConsole;
+import ca.quarkphysics.hsa2.GraphicsConsole;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
