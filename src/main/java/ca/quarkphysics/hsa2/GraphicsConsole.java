@@ -1850,6 +1850,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 
 	/**
 	* Returns true of mouse is being dragged (button down and mouse moving triggers a drag event)
+	* @return is the mouse being dragged
 	*/ 
 	public boolean isMouseDragged() {
 		return mouseDrag;
