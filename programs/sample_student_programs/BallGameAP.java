@@ -9,7 +9,7 @@ The program is being published for illustrative purposes only.
 ***/
 
 
-import hsa2.GraphicsConsole;
+import ca.quarkphysics.hsa2.GraphicsConsole;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;

@@ -8,7 +8,7 @@
 
 package YOUR_PACKAGE_NAME_HERE; // change this to match the name of the package (folder) that code is in
 
-import hsa2.GraphicsConsole;     // this imports the code from the hsa2 new package
+import ca.quarkphysics.hsa2.GraphicsConsole;     // this imports the code from the hsa2 new package
 import java.awt.Color;   // this imports code for using colors and fonts
 import java.awt.Font;
 

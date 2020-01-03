@@ -32,7 +32,7 @@ I can't make the variables in the Ball and Block class private unless I write ge
 which is quite easy, but I'll leave this as an excercise for the student.
  *********************************************************/
 
-import hsa2.GraphicsConsole;
+import ca.quarkphysics.hsa2.GraphicsConsole;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;

@@ -13,7 +13,7 @@ package animation;
     I may try and code this just for fun.
 *********************************************************/
 
-import hsa2.GraphicsConsole;
+import ca.quarkphysics.hsa2.GraphicsConsole;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
