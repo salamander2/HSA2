@@ -37,12 +37,13 @@ import javax.swing.Timer;
  * Update September 2014: Fixed bug in getRow() and getColumn(); they now report
  * the current cursor position without requiring a print() first.
  * 
+ * @author Evan Pratten (packaging updates)
  * @author Michael Harwood (minor text printing bug fix)
  * @author Sam Scott
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
  * 
- * @version 4.4
+ * @version 4.5
  */
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 

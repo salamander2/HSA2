@@ -27,3 +27,11 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
+
+
+javadoc{
+    source = "src/main/java"
+    options.addBooleanOption "-no-module-directories", true
+    destinationDir = file("$projectDir/docs")
+
+}

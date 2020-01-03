@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ca.quarkphysics.hsa2","l":"ConsoleCanvas"},{"p":"ca.quarkphysics.hsa2","l":"GraphicsConsole"},{"p":"ca.quarkphysics.hsa2","l":"TextInputFile"},{"p":"ca.quarkphysics.hsa2","l":"TextOutputFile"}]

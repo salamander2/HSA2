@@ -41,11 +41,13 @@ import javax.swing.JPanel;
  *   - fixed drawImage to be more reliable
  *   - added mouse listener code
  * <p>
+ * 
+ * @author Evan Pratten (packaging updates)
  * @author Tom West (old hsa code)
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
- * @version 4.4
+ * @version 4.5
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -54,7 +56,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	private static final int DEFAULT_HEIGHT = 500;
 	private static final int DEFAULT_WIDTH = 650;
 	private static final int DEFAULT_FONTSIZE = 12;
-	private static final String DEFAULT_NAME = "ca.quarkphysics.hsa2 Graphics Console";
+	private static final String DEFAULT_NAME = "hsa2 Graphics Console";
 
 	// The main drawing surface
 	private ConsoleCanvas canvas;
@@ -197,7 +199,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	}
 
 	/** Creates GraphicsConsole with specified window width, height, font size, and name (title)
-	 * invokeAnd Wait() is used to make ca.quarkphysics.hsa2 thread safe, since Timers can be used to update graphics.
+	 * invokeAnd Wait() is used to make hsa2 thread safe, since Timers can be used to update graphics.
 	 * and invokeLater() does not return fast enough, and so causes null pointer errors for gc.methods
 	 * 
 	 * @param width GraphicsConsole width in pixels
