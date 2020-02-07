@@ -1,11 +1,6 @@
 package hsa2;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Polygon;
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -45,6 +40,7 @@ import javax.swing.JPanel;
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
+ * @author Silas Bartha (setColorGradient, updated graphics to Graphics2D)
  * @version 4.4
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
@@ -147,12 +143,23 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	/** Code for the UP arrow **/
 	public static final int VK_UP = KeyEvent.VK_UP;
 
+	// Gradient Types
+	public enum GradientType {
+		/**Linear gradient, variable amount of points**/
+		GRADIENT_LINEAR,
+		/**Radial gradient, variable amount of points**/
+		GRADIENT_RADIAL,
+		/**Conical gradient, variable amount of points**/
+		GRADIENT_CONICAL
+	}
+
 	// Mouse Variables
 
 	private boolean mouseButton[] = { false, false, false };
 	private int mouseX = 0, mouseY = 0, mouseClick = 0, mouseWheelRotation = 0, mouseWheelUnitsToScroll = 0;
 	private boolean mouseDrag = false;
 	private Point startDrag, endDrag;
+
 
 	// ****************
 	// *** CONSTRUCTORS
@@ -269,6 +276,14 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 */
 	public void setColor(Color c) {
 		canvas.setColor(c);
+	}
+	/** Set the graphics (foreground) colour to a gradient
+	 * @param gradientType Gradient type
+	 * @param colors Desired colors to be part of the gradient
+	 * @param fractions Points along the gradient
+	 */
+	public void setColorGradient(GradientType gradientType, int startX, int startY, int endX, int endY, Color[] colors, float[] fractions) {
+		canvas.setColorGradient(gradientType, startX, startY, endX, endY, colors, fractions);
 	}
 	/**
 	 * NOTE: This command only sets the background color. Nothing will change on the drawing
