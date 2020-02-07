@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 //import java.awt.image.ImageObserver;
@@ -52,6 +53,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	private Color backgroundColor = Color.white;
 	/** Screen size **/
 	private int width, height;
+	/** Graphics Rotation & Translation **/
+	private double rotation = 0;
+	private Point translation = new Point(0,0);
 	/** Screen drawing mode **/
 	private boolean xorMode = false;
 	/** Color for xor mode **/
@@ -150,29 +154,41 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	// ************
 	void clear()
 	{
-		Graphics2D g = getOffscreenGraphics();
-		g.setColor(backgroundColor);
+		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
+		g2.setColor(backgroundColor);
 		if(xorMode)
-			g.setPaintMode();
-		g.fillRect(0, 0, width, height);
+			g2.setPaintMode();
+		g2.fillRect(0, 0, width, height);
 		setCursor(0,0);
 		if(xorMode)
-			g.setXORMode(xorColor);
+			g2.setXORMode(xorColor);
 	}
 	void clearRect(int x, int y, int width, int height)
 	{
-		Graphics2D g = getOffscreenGraphics();
-		g.setColor(backgroundColor);
+		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
+		g2.setColor(backgroundColor);
 		if(xorMode)
-			g.setPaintMode();
-		g.fillRect(x, y, width, height);
+			g2.setPaintMode();
+		g2.fillRect(x, y, width, height);
 		if(xorMode)
-			g.setXORMode(xorColor);
+			g2.setXORMode(xorColor);
 	}
 	void copyArea(int x, int y, int width, int height, int dx, int dy)
 	{
-		Graphics2D g = getOffscreenGraphics();
-		g.copyArea(x, y, width, height, dx, dy);
+		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
+		g2.copyArea(x, y, width, height, dx, dy);
+	}
+	void setRotation(int degrees){
+		rotation=Math.toRadians(degrees);
+	}
+	void setTranslation(int x, int y){
+		translation = new Point(x, y);
 	}
 	void setColor(Color c)
 	{
@@ -210,13 +226,17 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	void fillRect(int x, int y, int width, int height)
 	{
-		Graphics2D g = getOffscreenGraphics();
-		g.setPaint(foregroundColor);
-		g.fillRect(x, y, width, height);
+		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
+		g2.setPaint(foregroundColor);
+		g2.fillRect(x, y, width, height);
 	}
 	void drawRect(int x, int y, int width, int height)
 	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		g2.setPaint(foregroundColor);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -227,6 +247,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void fillOval(int x, int y, int width, int height)
 	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -236,6 +258,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void drawOval(int x, int y, int width, int height)
 	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -247,6 +271,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void drawLine(int x1, int y1, int x2, int y2)
 	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -256,6 +282,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	void drawPolygon(Polygon p){
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -266,6 +294,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void drawPolygon(int[] x, int[] y, int n)
 	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -276,6 +306,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void fillPolygon(Polygon p)
 	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -285,6 +317,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void fillPolygon(int[] x, int[] y, int n)
 	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -293,6 +327,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -302,6 +338,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -310,6 +348,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	void drawRoundRect(int x, int y, int width, int height, int xRadius, int yRadius)	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -319,6 +359,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	void fillRoundRect(int x, int y, int width, int height, int xRadius, int yRadius) {
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -328,17 +370,23 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void draw3DRect(int x, int y, int width, int height, boolean raised)
 	{
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		g2.setPaint(foregroundColor);
 		g2.draw3DRect(x, y, width, height, raised);
 	}
 	void fill3DRect(int x, int y, int width, int height, boolean raised) {
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		g2.setPaint(foregroundColor);
 		g2.fill3DRect(x, y, width, height, raised);
 	}
 	//MH. Prevent calls to g2.setFont() if the font has not changed.
 	void drawString(String str, int x, int y) {
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -377,6 +425,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void drawImage(Image img, int x, int y) {
 		boolean success = false;
 		Graphics2D g2 = getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
 		success = g2.drawImage (img, x, y, null);
 		// loop to timeout if image not drawn properly
 		for (int i = 0 ; i < 1000 & !success ; i++) {
@@ -395,6 +445,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void drawImage(Image img, int x, int y, int width, int height) {
 		boolean success = false;
 			Graphics2D g2 = getOffscreenGraphics();
+			g2.rotate(rotation);
+			g2.translate(translation.x, translation.y);
 			success = g2.drawImage (img, x, y, width, height, null);
 			// loop to timeout if image not drawn properly
 			for (int i = 0 ; i < 1000 & !success ; i++)
@@ -948,6 +1000,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		int y = (row) * fontHeight;
 			Graphics2D g2 = (Graphics2D) buffer.getGraphics();
 
+			g2.rotate(rotation);
+			g2.translate(translation.x, translation.y);
+
 			// Erase the area that the image will appear on.
 			g2.setPaint (backgroundColor);
 			g2.fillRect (x+MARGIN, y+MARGIN, fontWidth * text.length (), fontHeight);
@@ -970,6 +1025,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		int len = width - x;
 			Graphics2D g2 = (Graphics2D) buffer.getGraphics();
 
+			g2.rotate(rotation);
+			g2.translate(translation.x, translation.y);
+
 			// First clear the rectangle on the offscreen image.
 			g2.setPaint (backgroundColor);
 			g2.fillRect (x+MARGIN, y+MARGIN, len, fontHeight);
@@ -983,6 +1041,10 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		synchronized(container)
 		{
 			Graphics2D g2 = (Graphics2D) buffer.getGraphics();
+
+			g2.rotate(rotation);
+			g2.translate(translation.x, translation.y);
+
 			// Scroll the screen up
 			g2.copyArea (0, fontHeight, width, height - fontHeight, 0, -fontHeight);
 			// Erase the last line
@@ -994,7 +1056,8 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	{	  
 		synchronized(container)
 		{
-			g.drawImage(buffer, 0, 0, width, height, this);
+			Graphics2D g2 = (Graphics2D) g;
+			g2.drawImage(buffer, 0, 0, width, height, this);
 		}
 	}
 	/* This is the action performed for the Swing Timer that is started in the constructor */

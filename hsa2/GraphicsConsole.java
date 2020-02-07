@@ -567,6 +567,20 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	}
 
 	/**
+	 * Translates the graphics
+	 */
+	public void setTranslation(int x, int y){
+		canvas.setTranslation(x,y);
+	}
+
+	/**
+	 * Rotates the graphics
+	 */
+	public void setRotation(int degrees){
+		canvas.setRotation(degrees);
+	}
+
+	/**
 	 * Draws a star outline on the screen from (x, y) to (x + width, y + width). Adapted from hsa.
 	 *
 	 * @param x
