@@ -1,7 +1,6 @@
 package hsa2;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-
+import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -10,11 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.stream.IntStream;
-//import java.awt.image.ImageObserver;
 
-import javax.swing.*;
+//import java.awt.image.ImageObserver;
 
 /**
  * This is a re-implementation of the old hsa console by Holt Software Associates.
