@@ -581,6 +581,11 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	}
 
 	/**
+	 * Shears the graphic
+	 */
+	public void  setShear(double shx, double shy){canvas.setShear(shx, shy);}
+
+	/**
 	 * Draws a star outline on the screen from (x, y) to (x + width, y + width). Adapted from hsa.
 	 *
 	 * @param x
