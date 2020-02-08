@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * couple of small bugs in the input routines. April 30, 2010.
  * <p>
  * Differences from hsa console:
- *   - Row &amp; Column for text start at 0, 0
+ *   - Row & Column for text start at 0, 0
  *   - When creating console, specify width, height in pixels (not rows, columns)
  *   - setColor sets the drawing color for print and println as well as graphics
  *   - setTextBackgroundColor no longer works. Use setBackgroundColor instead.
@@ -35,13 +35,15 @@ import javax.swing.JPanel;
  *   - dropped support for print, quit, save buttons.
  *   - fixed drawImage to be more reliable
  *   - added mouse listener code
+ *   - added linear, radial and conical gradient painting options
+ *   - added transformation functionality to the graphics
  * <p>
  * @author Tom West (old hsa code)
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
- * @author Silas Bartha (setColorGradient, updated graphics to Graphics2D)
- * @version 4.4
+ * @author Silas Bartha (setColorGradient, transformations, updated graphics to Graphics2D)
+ * @version 4.6
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
