@@ -1,10 +1,9 @@
-package graphics1;
+package programs;
 
-import hsa2.GraphicsConsole; 		
+import hsa2.GraphicsConsole;
 import java.awt.Color;
 
-public class HSB_colours
-{
+public class HSB_colours {
 	GraphicsConsole gc = new GraphicsConsole(1000,360,"Rainbow colours"); 
 	
 	public static void main(String[] args)
