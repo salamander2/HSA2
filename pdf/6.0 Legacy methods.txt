@@ -1,0 +1,2 @@
+The PDFs "6.1 Console Text Output" and "6.2 Console Text Input" are old legacy PDFs, describing functionality that is part of HSA2, but as far a I know, is no longer used.
+If you are a teacher who uses GraphicsConsole text input and output, please let me know and I can update these PDFs.
