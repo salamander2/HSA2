@@ -378,6 +378,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		if (width == this.getWidth() && height == this.getHeight()) return;
 		int width=this.getWidth();
 		int height=this.getHeight();
+		if (height < 1) return; //prevent crash if resizing to minimum height
 		this.setPreferredSize(new Dimension(width, height));
 		this.setMinimumSize(new Dimension(width, height));
 		this.setMaximumSize(new Dimension(width, height));

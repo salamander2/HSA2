@@ -26,15 +26,15 @@ These limitations will not be fixed. The solution is to begin programming in Swi
 ### There are sample programs and tutorials for you to work through. See the folder "programs"
  
 ### :movie_camera: I've just made a YouTube channel with some useful videos. 
-URL: https://www.youtube.com/channel/UCvdhhpYkAm7UBFUWOIj3mzw (Youtube channel "Salamander2")
+:boom: URL: https://www.youtube.com/channel/UCvdhhpYkAm7UBFUWOIj3mzw (Youtube channel "Salamander2")
 
 ----
 
-To install into Ecplise:
+To install the HSA2 library into Ecplise:
 
 * download the zip file from Github
 * unzip it
-* drag the whole hsa2 folder into your SRC folder in Eclipse
+* drag the whole hsa2 folder into the SRC folder of whatever project you're working on in Eclipse
 
 ----
 
