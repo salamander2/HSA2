@@ -6,27 +6,26 @@
  * @author M. Harwood
  */
 
-package YOUR_PACKAGE_NAME_HERE; // change this to match the name of the package (folder) that code is in
+package YOUR_PACKAGE_NAME_HERE; // CHANGE THIS to match the name of the package (folder) that code is in
 
-import hsa2.GraphicsConsole;     // this imports the code from the hsa2 new package
-import java.awt.Color;   // this imports code for using colors and fonts
+import hsa2.GraphicsConsole;     // this imports the code from the hsa2 graphics library
+import java.awt.Color;   	 // this imports standard Java code for using colors and fonts
 import java.awt.Font;
 
-public class ProgramTemplate	//there are three places where this name needs to be changed when you make a new class. (1)
+public class ProgramTemplate	//there are three places where THIS name NEEDS TO BE CHANGED when you make a new class. (1)
 {
-  public static void main(String[] args)
-  {
-    new ProgramTemplate(); // this is the name of your class (2)
+  public static void main(String[] args) {
+    new ProgramTemplate(); // this is the name of your class. CHANGE HERE (2)
   }
 
-  //Global variables here:
+  //Global variables can go here:
   GraphicsConsole gc = new GraphicsConsole(800, 600, "Drawings");
 
-  ProgramTemplate(){ //constructor. Name of class. (3)
+  ProgramTemplate() { //This is the constructor. Name of class. CHANGE HERE (3)
     //all drawing goes here
-
-	gc.setBackgroundColor(Color.BLACK);
-    gc.clear();
+	gc.setBackgroundColor(Color.YELLOW);
+	gc.clear();
+	gc.drawLine(50,50,300,100); //will draw in black since we haven't changed the foreground colour
     //.....
   }
   
