@@ -1,4 +1,4 @@
-/**********************************************************************************
+package programs.sample_student_programs; /**********************************************************************************
  * Sydney S
  * November 3, 2017. ICS3U1
  * Purpose: Create a game in which the user must survive in a maze for 15 seconds

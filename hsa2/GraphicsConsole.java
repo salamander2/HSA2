@@ -1,11 +1,6 @@
 package hsa2;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Polygon;
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -28,7 +23,7 @@ import javax.swing.JPanel;
  * couple of small bugs in the input routines. April 30, 2010.
  * <p>
  * Differences from hsa console:
- *   - Row &amp; Column for text start at 0, 0
+ *   - Row & Column for text start at 0, 0
  *   - When creating console, specify width, height in pixels (not rows, columns)
  *   - setColor sets the drawing color for print and println as well as graphics
  *   - setTextBackgroundColor no longer works. Use setBackgroundColor instead.
@@ -40,12 +35,15 @@ import javax.swing.JPanel;
  *   - dropped support for print, quit, save buttons.
  *   - fixed drawImage to be more reliable
  *   - added mouse listener code
+ *   - added linear, radial and conical gradient painting options
+ *   - added transformation functionality to the graphics
  * <p>
  * @author Tom West (old hsa code)
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
- * @version 4.4
+ * @author Silas Bartha (setColorGradient, transformations, updated graphics to Graphics2D)
+ * @version 4.6
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -147,12 +145,23 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	/** Code for the UP arrow **/
 	public static final int VK_UP = KeyEvent.VK_UP;
 
+	// Gradient Types
+	public enum GradientType {
+		/**Linear gradient, variable amount of points**/
+		GRADIENT_LINEAR,
+		/**Radial gradient, variable amount of points**/
+		GRADIENT_RADIAL,
+		/**Conical gradient, variable amount of points**/
+		GRADIENT_CONICAL
+	}
+
 	// Mouse Variables
 
 	private boolean mouseButton[] = { false, false, false };
 	private int mouseX = 0, mouseY = 0, mouseClick = 0, mouseWheelRotation = 0, mouseWheelUnitsToScroll = 0;
 	private boolean mouseDrag = false;
 	private Point startDrag, endDrag;
+
 
 	// ****************
 	// *** CONSTRUCTORS
@@ -269,6 +278,14 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 */
 	public void setColor(Color c) {
 		canvas.setColor(c);
+	}
+	/** Set the graphics (foreground) colour to a gradient
+	 * @param gradientType Gradient type
+	 * @param colors Desired colors to be part of the gradient
+	 * @param fractions Points along the gradient
+	 */
+	public void setColorGradient(GradientType gradientType, int startX, int startY, int endX, int endY, Color[] colors, float[] fractions) {
+		canvas.setColorGradient(gradientType, startX, startY, endX, endY, colors, fractions);
 	}
 	/**
 	 * NOTE: This command only sets the background color. Nothing will change on the drawing
@@ -550,6 +567,25 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 			//canvas.removeComponentListener(this); //NO. Null pointer error!
 		}
 	}
+
+	/**
+	 * Translates the graphics
+	 */
+	public void setTranslation(int x, int y){
+		canvas.setTranslation(x,y);
+	}
+
+	/**
+	 * Rotates the graphics
+	 */
+	public void setRotation(int degrees){
+		canvas.setRotation(degrees);
+	}
+
+	/**
+	 * Shears the graphic
+	 */
+	public void  setShear(double shx, double shy){canvas.setShear(shx, shy);}
 
 	/**
 	 * Draws a star outline on the screen from (x, y) to (x + width, y + width). Adapted from hsa.
