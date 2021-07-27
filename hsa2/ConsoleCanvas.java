@@ -42,7 +42,7 @@ import javax.swing.Timer;
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
  * 
- * @version 4.4
+ * @version 4.5
  */
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 
@@ -421,6 +421,26 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 				throw new RuntimeException ("Image not loaded.");
 	}
 
+    /* New. Michael Harwood, July 2021. Need full drawImage capabilities
+	 * Does the 1000 loop replace the image observer? */
+	void drawImage(Image img,
+			int dx1,int dy1,int dx2,int dy2,
+			int sx1,int sy1,int sx2,int sy2,ImageObserver observer) {
+
+		boolean success = false;
+		Graphics g = getOffscreenGraphics();
+		success = g.drawImage (img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);
+		// loop to timeout if image not drawn properly
+		for (int i = 0 ; i < 1000 & !success ; i++)
+		{
+			success = g.drawImage (img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);
+			try {
+				Thread.sleep (1);
+			} catch (InterruptedException e) {}
+		}
+		if (!success)
+			throw new RuntimeException ("Image not loaded.");
+	}
 
 	// ********
 	// *** TEXT

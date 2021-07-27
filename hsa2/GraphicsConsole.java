@@ -44,8 +44,8 @@ import javax.swing.JPanel;
  * @author Tom West (old hsa code)
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
- * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
- * @version 4.4
+ * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane, drawimage can do sprites)
+ * @version 4.5
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -504,6 +504,31 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public void drawImage(Image img, int x, int y, int width, int height) {
 		canvas.drawImage(img, x, y, width, height);
 	}
+
+    /**
+	 * Draws specified image on the drawing area. Note that if the image takes a while
+	 * to load, this method will delay until it is loaded, timing out after 1000 ms.
+	 * The subimage is scaled and flipped as needed according to the s and d parameters below
+     * @param       img the specified image to be drawn. This method does nothing if <code>img</code> is null.
+     * @param       dx1 the <i>x</i> coordinate of the first corner of the destination rectangle.
+     * @param       dy1 the <i>y</i> coordinate of the first corner of the destination rectangle.
+     * @param       dx2 the <i>x</i> coordinate of the second corner of the destination rectangle.
+     * @param       dy2 the <i>y</i> coordinate of the second corner of the destination rectangle.
+     * @param       sx1 the <i>x</i> coordinate of the first corner of the source rectangle.
+     * @param       sy1 the <i>y</i> coordinate of the first corner of the source rectangle.
+     * @param       sx2 the <i>x</i> coordinate of the second corner of the source rectangle.
+     * @param       sy2 the <i>y</i> coordinate of the second corner of the source rectangle.
+     * @param       observer object. It is STRONGLY recommended to set this to NULL when you call this method.
+     * 					  There is no guarantee that the image observer will work as intended. It has not been tested with HSA2.
+     * @return   <code>false</code> if the image pixels are still changing;
+     *           <code>true</code> otherwise.
+	 */
+	public void drawImage(Image img,
+		int dx1,int dy1,int dx2,int dy2,
+		int sx1,int sy1,int sx2,int sy2,ImageObserver observer) {
+			canvas.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);		
+	}
+
 	/**
 	 * Sets the font for drawString (not for print or println)
 	 * v4.3 Only sets the font if the font has changed (because setting fonts slows graphics down a lot).
