@@ -1,11 +1,15 @@
 Change Log
 ==========
 
-Version 4.4
+Version 4.5
+	GraphicsConsole.java and ConsoleCanvas.java
+		Added the version of drawImage() that lets you specify the source and destination parameters. Needed for animation.
+		https://docs.oracle.com/javase/7/docs/api/java/awt/Graphics.html
+		
+Version 4.4		
 	GraphicsConsole.java
 		Added code for mouse dragging. Added methods getMouseDX(), getMouseDY(), isMouseDragged(). 
-		See sample code for how to use this
-
+		See sample code for how to use this. [The sample code seems to be missing!]
 
 Version 4.3
 	ConsoleCanvas.java
