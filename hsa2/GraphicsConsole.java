@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.image.ImageObserver;
+import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -18,6 +18,9 @@ import java.awt.event.MouseWheelListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,8 +48,8 @@ import javax.swing.JPanel;
  * @author Tom West (old hsa code)
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
- * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane, drawimage can do sprites)
- * @version 4.5
+ * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
+ * @version 4.4
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -483,6 +486,57 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public void drawString(String str, int x, int y) {
 		canvas.drawString(str, x, y);
 	}
+	
+	/**
+	 * Plays a sound in loop
+	 * @param url The file location of the sound
+	 */
+	public synchronized void playSoundLoop(final String url) {
+		  new Thread(new Runnable() {
+		    public void run() {
+		      try {
+		        Clip clip = AudioSystem.getClip();
+		        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+		          this.getClass().getClassLoader().getResourceAsStream(url));
+		        clip.open(inputStream);
+		        clip.loop(Clip.LOOP_CONTINUOUSLY);; 
+		      } catch (Exception e) {
+		        System.err.println(e.getMessage());
+		      }
+		    }
+		  }).start();
+		}
+	
+	/**
+	 * Plays a sound
+	 * @param url The file location of the sound
+	 */
+	public synchronized void playSound(final String url) {
+		  new Thread(new Runnable() {
+		    public void run() {
+		      try {
+		        Clip clip = AudioSystem.getClip();
+		        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+		          this.getClass().getClassLoader().getResourceAsStream(url));
+		        clip.open(inputStream);
+		        clip.start();
+		      } catch (Exception e) {
+		        System.err.println(e.getMessage());
+		      }
+		    }
+		  }).start();
+		}
+	
+	/**
+	 * Create an image without having to write the entire line of code every time you need an image
+	 * @param url The filename of the image
+	 * @return Returns the image
+	 */
+	public Image createImage(String url) {
+		final Image image = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource(url));
+		return image;
+	}
+	
 	/**
 	 * Draws specified image on the drawing area. Note that if the image takes a while
 	 * to load, this method will delay until it is loaded, timing out after 1000 ms.
@@ -505,31 +559,6 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public void drawImage(Image img, int x, int y, int width, int height) {
 		canvas.drawImage(img, x, y, width, height);
 	}
-
-    /**
-	 * Draws specified image on the drawing area. Note that if the image takes a while
-	 * to load, this method will delay until it is loaded, timing out after 1000 ms.
-	 * The subimage is scaled and flipped as needed according to the s and d parameters below
-     * @param       img the specified image to be drawn. This method does nothing if <code>img</code> is null.
-     * @param       dx1 the <i>x</i> coordinate of the first corner of the destination rectangle.
-     * @param       dy1 the <i>y</i> coordinate of the first corner of the destination rectangle.
-     * @param       dx2 the <i>x</i> coordinate of the second corner of the destination rectangle.
-     * @param       dy2 the <i>y</i> coordinate of the second corner of the destination rectangle.
-     * @param       sx1 the <i>x</i> coordinate of the first corner of the source rectangle.
-     * @param       sy1 the <i>y</i> coordinate of the first corner of the source rectangle.
-     * @param       sx2 the <i>x</i> coordinate of the second corner of the source rectangle.
-     * @param       sy2 the <i>y</i> coordinate of the second corner of the source rectangle.
-     * @param       observer object. It is STRONGLY recommended to set this to NULL when you call this method.
-     * 					  There is no guarantee that the image observer will work as intended. It has not been tested with HSA2.
-     * @return   <code>false</code> if the image pixels are still changing;
-     *           <code>true</code> otherwise.
-	 */
-	public void drawImage(Image img,
-		int dx1,int dy1,int dx2,int dy2,
-		int sx1,int sy1,int sx2,int sy2,ImageObserver observer) {
-			canvas.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);		
-	}
-
 	/**
 	 * Sets the font for drawString (not for print or println)
 	 * v4.3 Only sets the font if the font has changed (because setting fonts slows graphics down a lot).
@@ -1661,7 +1690,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	// ************************
 	// *** OTHER PUBLIC METHODS
 	// ************************
-
+	
 	/**
 	 * Closes the GraphicsConsole window.
 	 */
