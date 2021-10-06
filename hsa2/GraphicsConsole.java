@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -15,9 +16,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -635,57 +642,66 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
     }
 
     /**
-     * Plays a sound in loop
+     * Loads sound files into clips to be played
      *
-     * @param url The file location of the sound
+     * @param filename Location of the audio file
+     * @return Returns the sound clip
      */
-    public synchronized void playSoundLoop(final String url) {
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                            this.getClass().getClassLoader().getResourceAsStream(url));
-                    clip.open(inputStream);
-                    clip.loop(Clip.LOOP_CONTINUOUSLY);
-                    ;
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
-        }).start();
+    public Clip loadSound(String filename) {
+        Clip in = null;
+
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(getClass().getClassLoader().getResource(filename));
+            in = AudioSystem.getClip();
+            in.open(audioIn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return in;
     }
 
     /**
-     * Plays a sound
-     *
-     * @param url The file location of the sound
+     * Plays an audio clip once
+     * @param clip The audio clipped to be played
      */
-    public synchronized void playSound(final String url) {
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                            this.getClass().getClassLoader().getResourceAsStream(url));
-                    clip.open(inputStream);
-                    clip.start();
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
-        }).start();
+    public void playSound(Clip clip) {
+        if (clip.isRunning()) clip.stop();
+        clip.setFramePosition(0);
+        clip.start();
     }
 
     /**
-     * Create an image without having to write the entire line of code every time you need an image
+     * Plays an audio clip in an infinite loop
+     * @param clip The clip to be played
+     */
+    public void playSoundLoop(Clip clip) {
+        if (clip.isRunning()) clip.stop();
+        clip.setFramePosition(0);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    /**
+     * Stops an audio clip that was being looped
+     * @param clip The clip to be stopped
+     */
+    public void stopSoundLoop(Clip clip) {
+        clip.stop();
+    }
+
+    /**
+     * Create a buffered image without the hassle of writing a try and catch everytime.
      *
      * @param url The filename of the image
-     * @return Returns the image
+     * @return Returns the bufferedImage
      */
-    public Image createImage(String url) {
-        final Image image = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource(url));
-        return image;
+    public BufferedImage loadImage(String url) {
+        try {
+            return ImageIO.read(new File(url));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
