@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.image.ImageObserver;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -15,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.ImageObserver;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -46,7 +46,7 @@ import javax.swing.JPanel;
  * @author Sam Scott
  * @author Josh Gray (mouse code) 
  * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane, drawimage can do sprites)
- * @version 4.5
+ * @version 4.6
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -1656,6 +1656,18 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 */
 	public boolean isKeyDown(int key) {
 		return canvas.isKeyDown(key);
+	}
+	/**
+	 * @return the last WASD key pressed
+	 **/
+	public int getLastWASD() {
+		return canvas.getLastWASD();
+	}
+	/**
+	 * @return the last arrow (cursor) key pressed
+	 **/
+	public int getLastArrow() {
+		return canvas.getLastArrow();
 	}
 
 	// ************************

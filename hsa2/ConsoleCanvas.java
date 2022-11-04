@@ -12,13 +12,12 @@ import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.image.ImageObserver;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-//import java.awt.image.ImageObserver;
+import java.awt.image.ImageObserver;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -38,12 +37,16 @@ import javax.swing.Timer;
  * Update September 2014: Fixed bug in getRow() and getColumn(); they now report
  * the current cursor position without requiring a print() first.
  * 
+ * Update 2017:
+ * 
+ * Update 2022 (v4.6) Added getLastWASD() and getLastArrow(). 
+ * 
  * @author Michael Harwood (minor text printing bug fix)
  * @author Sam Scott
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
  * 
- * @version 4.5
+ * @version 4.6
  */
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 
@@ -118,6 +121,11 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	private final int numKeyCodes = 256;
 	/** Array of booleans representing characters currently held down **/
 	private boolean[] keysDown = new boolean [numKeyCodes];
+	/** Store the last WASD key pressed */
+	private int lastWASD = GraphicsConsole.VK_UNDEFINED;
+	/** Store the last arrow (cursor) key pressed */
+	private int lastArrow = GraphicsConsole.VK_UNDEFINED;
+	
 
 	// ****************
 	// *** CONSTRUCTORS
@@ -815,15 +823,22 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 
  	//MH. June 2017. Needed for showDialog() in the middle of a game. Not public.
-        synchronized void clearKeysDown() {
-                for (int i=0; i< keysDown.length; i++) {
-                        keysDown[i] = false;
-                }
+    synchronized void clearKeysDown() {
+        for (int i=0; i< keysDown.length; i++) {
+                keysDown[i] = false;
+        }
 		currentKeyChar = (char) GraphicsConsole.VK_UNDEFINED;
 		currentKeyCode = GraphicsConsole.VK_UNDEFINED;
         }
+    public synchronized int getLastWASD()
+ 	{
+ 		return lastWASD;
+ 	}
 
-
+    public synchronized int getLastArrow()
+ 	{
+ 		return lastArrow;
+ 	}
 	// **********************
 	// *** UTILITY METHODS
 	// **********************
@@ -855,8 +870,17 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		lastKeyCode = currentKeyCode;
 		lastKeyChar = currentKeyChar;
 
-		if ((currentKeyCode >= 0) & (currentKeyCode < numKeyCodes))
+		if ((currentKeyCode >= 0) & (currentKeyCode < numKeyCodes)) {
 			keysDown [currentKeyCode] = true;
+			//save the last WASD or ArrowKey that is pressed
+			if ("WASD".indexOf(currentKeyCode) >= 0) {
+				lastWASD = currentKeyCode;
+			}
+			if (currentKeyCode >=37 && currentKeyCode <= 40) {
+				lastArrow = currentKeyCode;
+			}
+					
+		}
 
 		char ch = e.getKeyChar ();
 		// Handle standard keystrokes including backspace, newline and
@@ -927,8 +951,19 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	{
 		currentKeyCode = GraphicsConsole.VK_UNDEFINED;
 		currentKeyChar = (char) GraphicsConsole.VK_UNDEFINED;
-		if ((e.getKeyCode () >= 0) & (e.getKeyCode () < numKeyCodes))
+		if ((e.getKeyCode () >= 0) & (e.getKeyCode () < numKeyCodes)) {
 			keysDown [e.getKeyCode()] = false;
+			
+/*			//Reset lastWASD and lastArrow - I'm not sure if this is really needed. MH.
+ 			if (!keysDown['A'] && !keysDown['D'] && !keysDown['S'] && !keysDown['W']) {
+				lastWASD = GraphicsConsole.VK_UNDEFINED;
+			}
+			if (!keysDown[37] && !keysDown[38] && !keysDown[39] && !keysDown[40]) {
+				lastArrow = GraphicsConsole.VK_UNDEFINED;
+			}
+*/
+		}
+		
 	}
 	/**
 	 * Does nothing.  Called by the system when a key is typed.
