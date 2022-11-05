@@ -4,6 +4,7 @@ Change Log
 Version 4.6
 	GraphicsConsole.java and ConsoleCanvas.java
 		Added getLastWASD() and getLastArrow(). These return the most recent WASD or cursor keys pressed.
+	NOTE: the PDF documentation has not been updated for methods added in versions 4.3-4.6
 	
 Version 4.5
 	GraphicsConsole.java and ConsoleCanvas.java
@@ -52,7 +53,7 @@ Version 3:
 		(which is more concise, less unweildy, and means that we don't need to keep adding on institutions who improve it)
 	Finished adding comments for JavaDoc (some were already there).	
 		 
-	@author Michael Harwood
+	@author Michael Harwood (TVDSB)
 	@date   November 2015
 	
 	Methods added: (to Console.java and ConsoleCanvas.java)
@@ -78,11 +79,11 @@ Version 3:
 	
 Version 2:
 	various mouse routines added
-	@author Josh Gray
+	@author Josh Gray (TVDSB)
 	@date
 	
 Version 1: 
 	HSA_UFA completely rewritten, reverse engineered from original HSA software written by Tom West. 
 	Based on Swing JFrame and JPanels
-	@author: Sam Scott
+	@author: Sam Scott from Sheridan College
 	@date:
