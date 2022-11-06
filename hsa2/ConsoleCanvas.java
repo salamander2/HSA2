@@ -125,6 +125,10 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	private int lastWASD = GraphicsConsole.VK_UNDEFINED;
 	/** Store the last arrow (cursor) key pressed */
 	private int lastArrow = GraphicsConsole.VK_UNDEFINED;
+	/** stack to store the last four WASD keys in order pressed */
+	private int[] stackWASD = new int[4];
+	/** stack to store the last four arrow keys in order pressed */
+	private int[] stackArrow = new int[4];
 	
 
 	// ****************
@@ -871,15 +875,29 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		lastKeyChar = currentKeyChar;
 
 		if ((currentKeyCode >= 0) & (currentKeyCode < numKeyCodes)) {
-			keysDown [currentKeyCode] = true;
-			//save the last WASD or ArrowKey that is pressed
-			if ("WASD".indexOf(currentKeyCode) >= 0) {
-				lastWASD = currentKeyCode;
+			
+			//Save the last WASD or ArrowKey that is pressed
+			if ("WASD".indexOf(currentKeyCode) >= 0) {				
+				//If the stack is popped correctly, the same key will never be in the stack twice
+				if (!keysDown[currentKeyCode]) {
+					stackWASD[3]=stackWASD[2];
+					stackWASD[2]=stackWASD[1];
+					stackWASD[1]=stackWASD[0];
+					stackWASD[0]=currentKeyCode;
+					lastWASD = stackWASD[0];
+				}
 			}
 			if (currentKeyCode >=37 && currentKeyCode <= 40) {
-				lastArrow = currentKeyCode;
-			}
-					
+				if (!keysDown[currentKeyCode]) {
+					stackArrow[3]=stackArrow[2];
+					stackArrow[2]=stackArrow[1];
+					stackArrow[1]=stackArrow[0];
+					stackArrow[0]=currentKeyCode;
+					lastArrow = stackArrow[0];
+				}				
+			}			
+			
+			keysDown [currentKeyCode] = true;								
 		}
 
 		char ch = e.getKeyChar ();
@@ -951,17 +969,47 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	{
 		currentKeyCode = GraphicsConsole.VK_UNDEFINED;
 		currentKeyChar = (char) GraphicsConsole.VK_UNDEFINED;
-		if ((e.getKeyCode () >= 0) & (e.getKeyCode () < numKeyCodes)) {
-			keysDown [e.getKeyCode()] = false;
+		int key = e.getKeyCode();
+		if ((key >= 0) & (key < numKeyCodes)) {
+			keysDown [key] = false;
 			
-/*			//Reset lastWASD and lastArrow - I'm not sure if this is really needed. MH.
- 			if (!keysDown['A'] && !keysDown['D'] && !keysDown['S'] && !keysDown['W']) {
-				lastWASD = GraphicsConsole.VK_UNDEFINED;
+			//Remove WASD key from middle of stack, or pop it off the top.
+			//NOTE: in interest of speed, this is all == and =. No forloops or recusion.
+			if (key == stackWASD[3]) stackWASD[3] = 0;
+			if (key == stackWASD[2]) {
+				stackWASD[2] = stackWASD[3];
+				stackWASD[3] = 0;
 			}
-			if (!keysDown[37] && !keysDown[38] && !keysDown[39] && !keysDown[40]) {
-				lastArrow = GraphicsConsole.VK_UNDEFINED;
+			if (key == stackWASD[1]) {
+				stackWASD[1] = stackWASD[2];
+				stackWASD[2] = stackWASD[3];
+				stackWASD[3] = 0;
 			}
-*/
+			if (key == stackWASD[0]) {
+				stackWASD[0]=stackWASD[1];
+				stackWASD[1]=stackWASD[2];
+				stackWASD[2]=stackWASD[3];
+				stackWASD[3]=0;
+				lastWASD = stackWASD[0];				
+			}
+			//Same code for stackArrow
+			if (key == stackArrow[3]) stackArrow[3] = 0;
+			if (key == stackArrow[2]) {
+				stackArrow[2] = stackArrow[3];
+				stackArrow[3] = 0;
+			}
+			if (key == stackArrow[1]) {
+				stackArrow[1] = stackArrow[2];
+				stackArrow[2] = stackArrow[3];
+				stackArrow[3] = 0;
+			}
+			if (key == stackArrow[0]) {
+				stackArrow[0]=stackArrow[1];
+				stackArrow[1]=stackArrow[2];
+				stackArrow[2]=stackArrow[3];
+				stackArrow[3]=0;
+				lastArrow = stackArrow[0];				
+			}
 		}
 		
 	}
