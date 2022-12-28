@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage[letterpaper, margin=2cm]{geometry}
+\title{Detecting Mouse Clicks in HSA2}
+\date{}
+
+\begin{document}
+\maketitle
+
+So you want to handle clicks? You want to learn the hallowed HSA2 lore? You've come to the right place!
+
+Before we start, you need to enable mouse event listening: \texttt{gc.enableMouse();}. This isn't on by default so programs don't need to keep track of the mouse when it isn't needed. If you don't have the mouse enabled, the results of click methods will be their return type's default value. You can also disable the mouse with \texttt{gc.disableMouse();}. \texttt{gc.enableMouse} and \texttt{gc.enableMouseMotion} are completely independent: you can use all the features of either of them with the other disabled.
+
+When you click a mouse, you can click in three places: the left mouse button, the scroll wheel (yes, you can click down on it!), and the right mouse button. HSA2 numbers these three buttons \texttt{0}, \texttt{1}, and \texttt{2}, respectively.
+
+\section*{\texttt{gc.getMouseButton}}
+The most basic way of detecting clicks is with \texttt{gc.getMouseButton}. This takes a button number as its argument, and returns \texttt{true} or \texttt{false}. For example, to see if the user has the right mouse button down, you would call \texttt{gc.getMouseButton(2)}. If the result is \texttt{true}, the right mouse is indeed down; if the result is \texttt{false}, it isn't.
+
+\section*{\texttt{gc.getMouseClick}}
+What if you want to detect a double click? \texttt{gc.getMouseClick} has you covered. This method takes no arguments, and will return \texttt{0} for no click, \texttt{1} for a single click, \texttt{2} for a double click, etc. This means the boolean \texttt{gc.getMouseClick() > 0} will tell you if the user has clicked. One inconvenience is that this method doesn't tell you \textit{which} button has been clicked, although it requires double clicks and friends to all be on the same button.
+
+\section*{\texttt{gc.getMouseNewClick}}
+In a loop, you frequently only want to detect the \textit{first} click. Let's say you have a \texttt{shoot()} method. If you call it every time \texttt{gc.getMouseButton} tells you to, it will shoot every frame the mouse is held down. If you don't want this behaviour, you can use \texttt{gc.getMouseNewClick}. Like \texttt{gc.getMouseButton}, it takes a button number as its argument, and returns \texttt{true} or \texttt{false}. The difference is that this only returns \texttt{true} on \textit{clicks}, and not when the mouse is being held down. This works by returning \texttt{true} iff both the specified button is clicked, and the user hasn't asked about that click yet.
+
+\bigskip
+\bigskip
+\noindent
+I hope you learned something. Happy programming!
+
+\end{document}

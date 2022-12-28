@@ -151,6 +151,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	// Mouse Variables
 
 	private boolean mouseButton[] = { false, false, false };
+	private boolean mouseButtonNotSeen[] = { false, false, false };
 	private int mouseX = 0, mouseY = 0, mouseClick = 0, mouseWheelRotation = 0, mouseWheelUnitsToScroll = 0;
 	private boolean mouseDrag = false;
 	private Point startDrag, endDrag;
@@ -1754,7 +1755,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	 * getMouseX() and getMouseY() return the coordinates of the mouse as of
 	 * the last time a button was clicked/pressed/released.
 	 * 
-	 *  - getMouseButton() and getMouseClick() are enabled.
+	 *  - getMouseButton(), getMouseClick(), and getMouseNewClick() are enabled.
 	 * 
 	 * enableMouseMotion(): Listens for mouse move and drag events, thereby
 	 * allowing getMouseX() and getMouseY() to return the current coordinates
@@ -1839,6 +1840,24 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public int getMouseClick() {
 		int toReturn = mouseClick;
 		mouseClick = 0;
+		return toReturn;
+	}
+
+	/**
+	 * Returns true if the specified button has been newly clicked. This function is meant
+	 * to be used in a loop, where it only returns true on the first click of a button.
+	 *
+	 * (In reality, this translates to "this function returns true if there has been a
+	 * click, and *this function* hasn't reported on that click before.)
+	 *
+	 * Buttons are numbered 0, 1 or 2.
+	 * @param buttonNum mouse button number (0,1,2)
+	 * @return T/F if that button has been newly clicked.
+	 */
+	public boolean getMouseNewClick(int buttonNum) {
+		if (buttonNum < 0 || mouseButtonNotSeen.length <= buttonNum) return false;
+		boolean toReturn = mouseButtonNotSeen[buttonNum];
+		mouseButtonNotSeen[buttonNum] = false;
 		return toReturn;
 	}
 
@@ -1965,15 +1984,22 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 	public void mousePressed(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
-		if (e.getButton() == MouseEvent.BUTTON1)
-			mouseButton[ 0 ] = true;
 
-		else if (e.getButton() == MouseEvent.BUTTON2)
-			mouseButton[ 1 ] = true;
+		switch (e.getButton()) {
+			case MouseEvent.BUTTON1:
+				mouseButton[0] = true;
+				mouseButtonNotSeen[0] = true;
+				break;
+			case MouseEvent.BUTTON2:
+				mouseButton[1] = true;
+				mouseButtonNotSeen[1] = true;
+				break;
+			case MouseEvent.BUTTON3:
+				mouseButton[2] = true;
+				mouseButtonNotSeen[2] = true;
+				break;
+		}
 
-		else if (e.getButton() == MouseEvent.BUTTON3)
-			mouseButton[ 2 ] = true;
-		
 		startDrag = new Point(e.getX(), e.getY());
 		endDrag = startDrag;
 	}
@@ -1984,15 +2010,18 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		mouseY = e.getY();
 		mouseClick = e.getClickCount(); //for better response when using gc.getMouseClick()
 
-		if (e.getButton() == MouseEvent.BUTTON1)
-			mouseButton[ 0 ] = false;
+		switch (e.getButton()) {
+			case MouseEvent.BUTTON1:
+				mouseButton[0] = false;
+				break;
+			case MouseEvent.BUTTON2:
+				mouseButton[1] = false;
+				break;
+			case MouseEvent.BUTTON3:
+				mouseButton[2] = false;
+				break;
+		}
 
-		else if (e.getButton() == MouseEvent.BUTTON2)
-			mouseButton[ 1 ] = false;
-
-		else if (e.getButton() == MouseEvent.BUTTON3)
-			mouseButton[ 2 ] = false;
-	
 		mouseDrag = false;
 		startDrag = endDrag = null;
 	}

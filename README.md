@@ -14,7 +14,7 @@
 ### Limitations:
 * All keyboard input is handled through the Swing KeyListener. 
 * There is no error handling for text input: the program displays a message and then ends immediately.
-* There is some flickering still with animated images. Using the `syncrhonized` keyword helps. 
+* There is some flickering still with animated images. Using the `synchronized` keyword helps.
 * No JButtons, JLabels, or other Swing components can be added to the JPanel, but as one can see from the examples, they're not really necessary.
 * most Graphics2D functions do not work (like .rotate()).  Antialiasing is implmented.
 * only one JPanel is created per JFrame (GraphicsConsole), but you can have multiple GraphicsConsoles
