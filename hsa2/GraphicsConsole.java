@@ -44,9 +44,10 @@ import javax.swing.JPanel;
  * <p>
  * @author Tom West (old hsa code)
  * @author Sam Scott
- * @author Josh Gray (mouse code) 
- * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane, drawimage can do sprites)
- * @version 4.6
+ * @author Josh Gray (mouse code)
+ * @author Michael Harwood (setStroke, antiAlias, updated dialogs to JOptionPane)
+ * @author Silas Bartha (rotations, updated graphics to Graphics2D)
+ * @version 4.7
  */
 public class GraphicsConsole extends JFrame implements MouseListener, MouseMotionListener, MouseWheelListener, ComponentListener {
 
@@ -575,6 +576,13 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 			if (super.isResizable()) super.setResizable(false);
 			//canvas.removeComponentListener(this); //NO. Null pointer error!
 		}
+	}
+	
+	/**
+	 * Rotates the graphics by n degrees about the point (x,y)
+	 */
+	public void setRotation(int degrees, int x, int y){
+		canvas.setRotation(degrees, x , y);
 	}
 
 	/**

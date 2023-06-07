@@ -8,6 +8,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.datatransfer.DataFlavor;
@@ -40,13 +41,15 @@ import javax.swing.Timer;
  * Update 2017:
  * 
  * Update 2022 (v4.6) Added getLastWASD() and getLastArrow(). 
+ * Update 2023 (v4.7) Added rotate method for all drawings and images.
  * 
+ * @author Silas Bartha (rotations, updated graphics to Graphics2D)
  * @author Michael Harwood (minor text printing bug fix)
  * @author Sam Scott
  * @author Josh Gray (getRow()/getColumn() bug fix)
  * @author Tom West (old hsa code)
  * 
- * @version 4.6
+ * @version 4.7
  */
 public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener {
 
@@ -56,7 +59,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	private hsa2.GraphicsConsole container;
 
 	// ***** Screen variables *****
-	
+
 	/** Off screen buffer **/
 	//private final BufferedImage buffer;
 	private BufferedImage buffer;
@@ -66,6 +69,9 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	private Color backgroundColor = Color.white;
 	/** Screen size **/
 	private int width, height;
+	/** Graphics Transformation **/
+	private double rotation = 0;
+	private Point translation = new Point(0,0);
 	/** Screen drawing mode **/
 	private boolean xorMode = false;
 	/** Color for xor mode **/
@@ -107,7 +113,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	protected int ungotChar = EMPTY_BUFFER;
 	private boolean echoOn = true;
 	//private boolean clearToEOL = true;
-	
+
 	// New Keyboard variables
 	/** Code for key currently held down **/
 	private int currentKeyCode = GraphicsConsole.VK_UNDEFINED;
@@ -129,7 +135,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	private int[] stackWASD = new int[4];
 	/** stack to store the last four arrow keys in order pressed */
 	private int[] stackArrow = new int[4];
-	
+
 
 	// ****************
 	// *** CONSTRUCTORS
@@ -147,7 +153,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		buffer = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		this.height = height;
 		this.width = width;
-		
+
 		// Adapted from old hsa code
 		textFont = new Font("monospaced", Font.PLAIN, fontSize);
 		FontMetrics fm = getFontMetrics(textFont);
@@ -194,8 +200,14 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	void copyArea(int x, int y, int width, int height, int dx, int dy)
 	{
-		Graphics g = getOffscreenGraphics();
-		g.copyArea(x, y, width, height, dx, dy);
+		Graphics2D g2 = (Graphics2D) getOffscreenGraphics();
+		g2.rotate(rotation);
+		g2.translate(translation.x, translation.y);
+		g2.copyArea(x, y, width, height, dx, dy);
+	}
+	void setRotation(int degrees, int x, int y){
+		rotation=Math.toRadians(degrees);
+		translation = new Point(x, y);
 	}
 	void setColor(Color c)
 	{
@@ -214,161 +226,110 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		xorMode = true;
 		xorColor = c;
 	}
-	void fillRect(int x, int y, int width, int height)
-	{
-		Graphics g = getOffscreenGraphics();
-		g.setColor(foregroundColor);
-		g.fillRect(x, y, width, height);
-	}
-	void drawRect(int x, int y, int width, int height)
-	{
-		Graphics g = getOffscreenGraphics();		
-		Graphics2D g2 = (Graphics2D) g;
-		g.setColor(foregroundColor);
+
+	private enum Shape {DRAWRECT, FILLRECT, DRAWOVAL, FILLOVAL, DRAWLINE};
+	private Graphics2D commonDrawingCode() {
+		Graphics2D g2 = (Graphics2D) getOffscreenGraphics();
+		g2.rotate(rotation, translation.x, translation.y);
+		g2.setColor(foregroundColor);
 		if (antiAlias) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
 		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-		g2.drawRect(x, y, width, height);
+		return g2;
+	}
+	
+	private void drawShape(Shape shape, int a, int b, int c, int d) {
+		Graphics2D g2 = commonDrawingCode();
+
+		//now do the specific drawing
+		switch (shape) {
+		case DRAWRECT:
+			g2.drawRect(a,b,c,d);
+			break;
+		case FILLRECT:
+			g2.fillRect(a,b,c,d);
+			break;
+		case DRAWOVAL:
+			g2.drawOval(a,b,c,d);
+			break;
+		case FILLOVAL:
+			g2.fillOval(a,b,c,d);
+			break;
+		case DRAWLINE:
+			g2.drawLine(a,b,c,d);
+		}
+		//g2.rotate(-rotation, translation.x, translation.y);
+	}
+
+	void fillRect(int x, int y, int width, int height)
+	{
+		drawShape(Shape.FILLRECT, x, y, width, height);
+	}
+	void drawRect(int x, int y, int width, int height)
+	{		
+		drawShape(Shape.DRAWRECT, x, y, width, height);
 	}	
 	void fillOval(int x, int y, int width, int height)
 	{
-		Graphics g = getOffscreenGraphics();		
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
-		g2.fillOval(x, y, width, height);
+		drawShape(Shape.FILLOVAL, x, y, width, height);
 	}
 	void drawOval(int x, int y, int width, int height)
 	{
-		Graphics g = getOffscreenGraphics();		
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
-		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-		g2.drawOval(x, y, width, height);
+		drawShape(Shape.DRAWOVAL, x, y, width, height);
 	}
-/* ORIGINAL
- 	protected void drawLine(int x1, int y1, int x2, int y2)
-	{
-		Graphics g = getOffscreenGraphics();
-		g.setColor(foregroundColor);
-		g.drawLine(x1, y1, x2, y2);
-	}
-*/
 	void drawLine(int x1, int y1, int x2, int y2)
 	{
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
-		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-		g2.drawLine(x1, y1, x2, y2);
+		drawShape(Shape.DRAWLINE, x1, y1, x2, y2);
 	}
+
 	void drawPolygon(Polygon p){
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
-		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND));
+		Graphics2D g2 = commonDrawingCode();
 		g2.drawPolygon(p);
 	}
 	void drawPolygon(int[] x, int[] y, int n)
 	{
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
-		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		Graphics2D g2 = commonDrawingCode();
 		g2.drawPolygon(x, y, n);
 	}
 	void fillPolygon(Polygon p)
 	{
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
+		Graphics2D g2 = commonDrawingCode();
 		g2.fillPolygon(p);
 	}
 	void fillPolygon(int[] x, int[] y, int n)
 	{
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
+		Graphics2D g2 = commonDrawingCode();
 		g2.fillPolygon(x, y, n);
 	}
 	void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
-		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		Graphics2D g2 = commonDrawingCode();
 		g2.drawArc(x, y, width, height, startAngle, arcAngle);
 	}
 	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
+		Graphics2D g2 = commonDrawingCode();
 		g2.fillArc(x, y, width, height, startAngle, arcAngle);
 	}
 	void drawRoundRect(int x, int y, int width, int height, int xRadius, int yRadius)	{
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
-		g2.setStroke(new BasicStroke (strokeSize,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		Graphics2D g2 = commonDrawingCode();
 		g2.drawRoundRect(x, y, width, height, xRadius, yRadius);
 	}
 	void fillRoundRect(int x, int y, int width, int height, int xRadius, int yRadius) {
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);		
+		Graphics2D g2 = commonDrawingCode();
 		g2.fillRoundRect(x, y, width, height, xRadius, yRadius);
 	}
 	void draw3DRect(int x, int y, int width, int height, boolean raised)
 	{
-		Graphics g = getOffscreenGraphics();
-		g.setColor(foregroundColor);
-		g.draw3DRect(x, y, width, height, raised);
+		Graphics2D g2 = commonDrawingCode();
+		g2.draw3DRect(x, y, width, height, raised);
 	}
 	void fill3DRect(int x, int y, int width, int height, boolean raised) {
-		Graphics g = getOffscreenGraphics();
-		g.setColor(foregroundColor);
-		g.fill3DRect(x, y, width, height, raised);
+		Graphics2D g2 = commonDrawingCode();
+		g2.fill3DRect(x, y, width, height, raised);
 	}
 	//MH. Prevent calls to g2.setFont() if the font has not changed.
 	void drawString(String str, int x, int y) {
-		Graphics g = getOffscreenGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		if (antiAlias) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-		g.setColor(foregroundColor);
+		Graphics2D g2 = commonDrawingCode();
 		if ( drawStringFont != null && !(drawStringFont.equals(g2.getFont())) )
 			g2.setFont(drawStringFont);
 		g2.drawString(str, x, y);
@@ -385,7 +346,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	void setAntiAlias(boolean onOff) {
 		this.antiAlias = onOff;
 	}
-	
+
 	//create a new buffered image if and only if the JFrame is resized.
 	void doResizing() {
 		if (width == this.getWidth() && height == this.getHeight()) return;
@@ -399,14 +360,15 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		this.height = height;
 		this.width = width;
 	}
-	
+
 	void drawImage(Image img, int x, int y) {
 		boolean success = false;
-		Graphics g = getOffscreenGraphics();
-		success = g.drawImage (img, x, y, null); 
+		Graphics2D g2 = (Graphics2D) getOffscreenGraphics();
+		g2.rotate(rotation, translation.x, translation.y);
+		success = g2.drawImage (img, x, y, null); 
 		// loop to timeout if image not drawn properly
 		for (int i = 0 ; i < 1000 & !success ; i++) {
-			success = g.drawImage (img, x, y, null); 
+			success = g2.drawImage (img, x, y, null); 
 			try
 			{
 				Thread.sleep (1);
@@ -417,42 +379,47 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		}
 		if (!success)
 			throw new RuntimeException ("Image not loaded.");
+		//g2.rotate(-rotation, translation.x, translation.y);
 	}
 	void drawImage(Image img, int x, int y, int width, int height) {
 		boolean success = false;
-			Graphics g = getOffscreenGraphics();
-			success = g.drawImage (img, x, y, width, height, null);
-			// loop to timeout if image not drawn properly
-			for (int i = 0 ; i < 1000 & !success ; i++)
-			{
-				success = g.drawImage (img, x, y, width, height, null);
-				try {
-					Thread.sleep (1);
-				} catch (InterruptedException e) {}
-			}
-			if (!success)
-				throw new RuntimeException ("Image not loaded.");
-	}
-
-    /* New. Michael Harwood, July 2021. Need full drawImage capabilities
-	 * Does the 1000 loop replace the image observer? */
-	void drawImage(Image img,
-			int dx1,int dy1,int dx2,int dy2,
-			int sx1,int sy1,int sx2,int sy2,ImageObserver observer) {
-
-		boolean success = false;
-		Graphics g = getOffscreenGraphics();
-		success = g.drawImage (img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);
+		Graphics2D g2 = (Graphics2D) getOffscreenGraphics();
+		g2.rotate(rotation, translation.x, translation.y);
+		success = g2.drawImage (img, x, y, width, height, null);
 		// loop to timeout if image not drawn properly
 		for (int i = 0 ; i < 1000 & !success ; i++)
 		{
-			success = g.drawImage (img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);
+			success = g2.drawImage (img, x, y, width, height, null);
 			try {
 				Thread.sleep (1);
 			} catch (InterruptedException e) {}
 		}
 		if (!success)
 			throw new RuntimeException ("Image not loaded.");
+		//g2.rotate(-rotation, translation.x, translation.y);
+	}
+
+	/* New. Michael Harwood, July 2021. Need full drawImage capabilities
+	 * Does the 1000 loop replace the image observer? */
+	void drawImage(Image img,
+			int dx1,int dy1,int dx2,int dy2,
+			int sx1,int sy1,int sx2,int sy2,ImageObserver observer) {
+
+		boolean success = false;
+		Graphics2D g2 = (Graphics2D) getOffscreenGraphics();
+		g2.rotate(rotation, translation.x, translation.y);
+		success = g2.drawImage (img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);
+		// loop to timeout if image not drawn properly
+		for (int i = 0 ; i < 1000 & !success ; i++)
+		{
+			success = g2.drawImage (img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer);
+			try {
+				Thread.sleep (1);
+			} catch (InterruptedException e) {}
+		}
+		if (!success)
+			throw new RuntimeException ("Image not loaded.");
+		//g2.rotate(-rotation, translation.x, translation.y);
 	}
 
 	// ********
@@ -826,23 +793,23 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		return false;
 	}
 
- 	//MH. June 2017. Needed for showDialog() in the middle of a game. Not public.
-    synchronized void clearKeysDown() {
-        for (int i=0; i< keysDown.length; i++) {
-                keysDown[i] = false;
-        }
+	//MH. June 2017. Needed for showDialog() in the middle of a game. Not public.
+	synchronized void clearKeysDown() {
+		for (int i=0; i< keysDown.length; i++) {
+			keysDown[i] = false;
+		}
 		currentKeyChar = (char) GraphicsConsole.VK_UNDEFINED;
 		currentKeyCode = GraphicsConsole.VK_UNDEFINED;
-        }
-    public synchronized int getLastWASD()
- 	{
- 		return lastWASD;
- 	}
+	}
+	public synchronized int getLastWASD()
+	{
+		return lastWASD;
+	}
 
-    public synchronized int getLastArrow()
- 	{
- 		return lastArrow;
- 	}
+	public synchronized int getLastArrow()
+	{
+		return lastArrow;
+	}
 	// **********************
 	// *** UTILITY METHODS
 	// **********************
@@ -875,7 +842,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		lastKeyChar = currentKeyChar;
 
 		if ((currentKeyCode >= 0) & (currentKeyCode < numKeyCodes)) {
-			
+
 			//Save the last WASD or ArrowKey that is pressed
 			if ("WASD".indexOf(currentKeyCode) >= 0) {				
 				//If the stack is popped correctly, the same key will never be in the stack twice
@@ -896,7 +863,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 					lastArrow = stackArrow[0];
 				}				
 			}			
-			
+
 			keysDown [currentKeyCode] = true;								
 		}
 
@@ -972,7 +939,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		int key = e.getKeyCode();
 		if ((key >= 0) & (key < numKeyCodes)) {
 			keysDown [key] = false;
-			
+
 			//Remove WASD key from middle of stack, or pop it off the top.
 			//NOTE: in interest of speed, this is all == and =. No forloops or recusion.
 			if (key == stackWASD[3]) stackWASD[3] = 0;
@@ -1011,7 +978,7 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 				lastArrow = stackArrow[0];				
 			}
 		}
-		
+
 	}
 	/**
 	 * Does nothing.  Called by the system when a key is typed.
@@ -1038,18 +1005,18 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	}
 	private void toggleVisibleCursor()
 	{
-			if (xorMode)
-				drawRect(actualCol*fontWidth+MARGIN, actualRow*fontHeight+MARGIN, fontWidth, fontHeight);
-			else
-			{
-				setXORMode(backgroundColor);
-				drawRect(actualCol*fontWidth+MARGIN, actualRow*fontHeight+MARGIN, fontWidth, fontHeight);
-				setPaintMode();
-			}
-			if (cursorVisible)
-				cursorVisible = false;
-			else
-				cursorVisible = true;
+		if (xorMode)
+			drawRect(actualCol*fontWidth+MARGIN, actualRow*fontHeight+MARGIN, fontWidth, fontHeight);
+		else
+		{
+			setXORMode(backgroundColor);
+			drawRect(actualCol*fontWidth+MARGIN, actualRow*fontHeight+MARGIN, fontWidth, fontHeight);
+			setPaintMode();
+		}
+		if (cursorVisible)
+			cursorVisible = false;
+		else
+			cursorVisible = true;
 	}
 	/**
 	 * Draws the specified text to the screen at the specified row and column
@@ -1063,16 +1030,16 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 	{
 		int x = (col) * fontWidth;
 		int y = (row) * fontHeight;
-			Graphics g = buffer.getGraphics ();
+		Graphics g = buffer.getGraphics ();
 
-			// Erase the area that the image will appear on.
-			g.setColor (backgroundColor);
-			g.fillRect (x+MARGIN, y+MARGIN, fontWidth * text.length (), fontHeight);
+		// Erase the area that the image will appear on.
+		g.setColor (backgroundColor);
+		g.fillRect (x+MARGIN, y+MARGIN, fontWidth * text.length (), fontHeight);
 
-			// Draw the text
-			g.setColor (foregroundColor);
-			g.setFont (textFont);
-			g.drawString (text, x+MARGIN, y+MARGIN + fontHeight - fontBase);
+		// Draw the text
+		g.setColor (foregroundColor);
+		g.setFont (textFont);
+		g.drawString (text, x+MARGIN, y+MARGIN + fontHeight - fontBase);
 	}
 	/**
 	 * Clears a rectangle on console canvas from the specified row and column to
@@ -1085,11 +1052,11 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		int x = (col) * fontWidth;
 		int y = (row) * fontHeight;
 		int len = width - x;
-			Graphics g = buffer.getGraphics ();
+		Graphics g = buffer.getGraphics ();
 
-			// First clear the rectangle on the offscreen image.
-			g.setColor (backgroundColor);
-			g.fillRect (x+MARGIN, y+MARGIN, len, fontHeight);
+		// First clear the rectangle on the offscreen image.
+		g.setColor (backgroundColor);
+		g.fillRect (x+MARGIN, y+MARGIN, len, fontHeight);
 	}
 	/**
 	 * Scrolls up the entire ConsoleCanvas a single line. The blank space at the
