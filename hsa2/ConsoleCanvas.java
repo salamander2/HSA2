@@ -209,6 +209,10 @@ public class ConsoleCanvas extends JPanel implements ActionListener, KeyListener
 		rotation=Math.toRadians(degrees);
 		translation = new Point(x, y);
 	}
+	void clearRotation() {
+		rotation = 0;
+		translation = new Point(0,0);
+	}
 	void setColor(Color c)
 	{
 		foregroundColor = c;
