@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * <p>
  * @author Tom West
  * @author Michael Harwood
- * @version 4.6
+ * @version 4.7
  * Changes: switch to using JOptionPane and remove CloseableDialog.java
  * 			change accessibility from public to default so that it can only be called by other HSA2 classes.
  */

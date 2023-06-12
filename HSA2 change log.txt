@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 4.7
+	GraphicsConsole.java and ConsoleCanvas.java
+		Added setRotation(angle, x, y) to rotate all following drawing commands by that much.
+		clearRotation() sets the angle back to zero.
+	@author: Silas Bartha and Michael Harwood
+
 Version 4.6
 	GraphicsConsole.java and ConsoleCanvas.java
 		Added getLastWASD() and getLastArrow(). These return the most recent WASD or cursor keys pressed.

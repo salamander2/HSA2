@@ -16,7 +16,7 @@ import java.text.NumberFormat;
  *                      http://www.holtsoft.com/java/hsa_package.html
  * <p>
  * @author Tom West
- * @version 4.6 	2021/07/27 (no changes made since version 2.0)
+ * @version 4.7 	2021/07/27 (no changes made since version 2.0)
  */
 public class TextOutputFile
 {
